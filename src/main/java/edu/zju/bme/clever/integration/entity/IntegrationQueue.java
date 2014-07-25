@@ -6,6 +6,7 @@ public class IntegrationQueue {
 	private String tableName;
 	private String logicalKeyName;
 	private String logicalKeyValue;
+	private Boolean status;
 	
 	public IntegrationQueue() {
 		super();
@@ -41,6 +42,14 @@ public class IntegrationQueue {
 
 	public void setLogicalKeyValue(String logicalKeyValue) {
 		this.logicalKeyValue = logicalKeyValue;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 	
 }

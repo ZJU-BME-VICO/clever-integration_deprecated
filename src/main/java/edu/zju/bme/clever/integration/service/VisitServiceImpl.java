@@ -30,26 +30,35 @@ public class VisitServiceImpl implements VisitService {
     private PatientService patientService;
     
 	@Override
-	public void integrate(String visitId) {
+	public Boolean integrate(String visitId) {
 		List<Visit> visits = this.miasVisitDao.get(visitId);
-		visits.forEach(v -> {
+		Boolean success = false;
+		if (visits.size() == 1) {
+			Visit v = visits.get(0);
 			List<Patient> miasPatients = this.miasPatientLogDao.get(v.getMpimlSerialNo());
 			if (!miasPatients.isEmpty()) {
 				v.setMpimlSerialNo(miasPatients.get(0).getSerialNo());
 				List<Patient> cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
 				if (!cdrPatients.isEmpty()) {
 					v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
-					this.cdrVisitDao.save(v);
+					if (this.cdrVisitDao.save(v) == 1) {
+						success = true;
+					}
 				} else {
-					this.patientService.integrate(miasPatients.get(0).getSerialNo());
-					cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
-					if (!cdrPatients.isEmpty()) {
-						v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
-						this.cdrVisitDao.save(v);
+					if (this.patientService.integrate(miasPatients.get(0).getSerialNo())) {
+						cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
+						if (!cdrPatients.isEmpty()) {
+							v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
+							if (this.cdrVisitDao.save(v) == 1) {
+								success = true;
+							}
+						}
 					}
 				}
 			}
-		});
+		}
+		
+		return success;
 	}
 
 }

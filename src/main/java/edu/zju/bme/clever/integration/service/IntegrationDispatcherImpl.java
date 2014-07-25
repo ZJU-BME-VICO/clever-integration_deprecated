@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,8 @@ import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVisitRowMapper;
 @Service("integrationDispatcher")
 @Transactional
 public class IntegrationDispatcherImpl implements IntegrationDispatcher {
+
+	private static Logger logger = Logger.getLogger(IntegrationDispatcherImpl.class.getName());
 
     @Resource(name="integrationService")
     private IntegrationService integrationService;
@@ -31,11 +34,22 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 	}
 	
 	private void dispatchIntegrationQueue(Optional<IntegrationQueue> iq) {
-		if (iq.get().getTableName().compareTo(MiasPatientRowMapper.MASTER_PATIENT_INDEX.class.getSimpleName()) == 0) {
-			this.patientService.integrate(iq.get().getLogicalKeyValue());
-		} else if (iq.get().getTableName().compareTo(MiasVisitRowMapper.PATIENT_VISIT.class.getSimpleName()) == 0) {
-			this.visitService.integrate(iq.get().getLogicalKeyValue());
+		try {
+			iq.get().setStatus(false);
+			if (iq.get().getTableName().compareTo(MiasPatientRowMapper.MASTER_PATIENT_INDEX.class.getSimpleName()) == 0) {
+				if (this.patientService.integrate(iq.get().getLogicalKeyValue())) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasVisitRowMapper.PATIENT_VISIT.class.getSimpleName()) == 0) {
+				if (this.visitService.integrate(iq.get().getLogicalKeyValue())) {
+					iq.get().setStatus(true);
+				}			
+			}			
+		} catch (Exception e) {
+			logger.error(e);
 		}
+		
+		this.integrationService.save(iq.get());
 	}
 
 }

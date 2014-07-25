@@ -43,5 +43,18 @@ public class RowMapperUtil {
 			return i;
 		}
 	}
+
+	public static Boolean getBoolean(ResultSet rs, String columnName) throws SQLException {
+		if (rs == null) {
+			return null;
+		} else {
+			Boolean b = rs.getBoolean(columnName);
+			if (rs.wasNull()) {
+				b = null;
+			}
+			
+			return b;
+		}
+	}
 	
 }

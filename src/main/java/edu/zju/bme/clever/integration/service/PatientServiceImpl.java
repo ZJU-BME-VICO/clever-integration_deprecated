@@ -21,19 +21,26 @@ public class PatientServiceImpl implements PatientService {
     private CdrPatientDao cdrPatientDao;
 
 	@Override
-	public void integrate(String patientId) {
-		List<Patient> patients = this.miasPatientDao.get(patientId);
-		patients.forEach(p -> {
-			this.cdrPatientDao.save(p);
-		});
+	public Boolean integrate(String patientId) {
+		return this.integrate(this.miasPatientDao.get(patientId));
 	}
 
 	@Override
-	public void integrate(int serialNo) {
-		List<Patient> patients = this.miasPatientDao.get(serialNo);
-		patients.forEach(p -> {
-			this.cdrPatientDao.save(p);
-		});
+	public Boolean integrate(int serialNo) {
+		return this.integrate(this.miasPatientDao.get(serialNo));
+	}
+	
+	private Boolean integrate(List<Patient> patients) {
+		Boolean success = false;
+		if (patients.size() == 1) {
+			Patient p = patients.get(0);
+			if (this.cdrPatientDao.save(p) == 1) {
+				success = true;
+			}
+		}
+		
+		return success;
+		
 	}
 
 }

@@ -8,6 +8,6 @@ public interface IntegrationQueueDao {
 	
 	public List<IntegrationQueue> getTop(int n);
 
-	public void save();
+	public void save(IntegrationQueue iq);
 
 }

@@ -22,4 +22,9 @@ public class IntegrationServiceImpl implements IntegrationService {
 		return this.integrationQueueDao.getTop(n);
 	}
 
+	@Override
+	public void save(IntegrationQueue iq) {
+		this.integrationQueueDao.save(iq);
+	}
+
 }
