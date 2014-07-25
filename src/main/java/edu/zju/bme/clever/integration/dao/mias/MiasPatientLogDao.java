@@ -4,9 +4,7 @@ import java.util.List;
 
 import edu.zju.bme.clever.integration.entity.Patient;
 
-public interface MiasPatientDao {
-
-	public List<Patient> get(String patientId);
+public interface MiasPatientLogDao {
 
 	public List<Patient> get(int serialNo);
 

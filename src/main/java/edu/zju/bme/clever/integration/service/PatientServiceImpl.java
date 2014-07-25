@@ -28,4 +28,12 @@ public class PatientServiceImpl implements PatientService {
 		});
 	}
 
+	@Override
+	public void integrate(int serialNo) {
+		List<Patient> patients = this.miasPatientDao.get(serialNo);
+		patients.forEach(p -> {
+			this.cdrPatientDao.save(p);
+		});
+	}
+
 }

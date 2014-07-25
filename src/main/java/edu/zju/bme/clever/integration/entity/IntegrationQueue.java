@@ -2,7 +2,7 @@ package edu.zju.bme.clever.integration.entity;
 
 public class IntegrationQueue {
 	
-	private int id;
+	private Integer id;
 	private String tableName;
 	private String logicalKeyName;
 	private String logicalKeyValue;
@@ -11,11 +11,11 @@ public class IntegrationQueue {
 		super();
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -2,7 +2,6 @@ package edu.zju.bme.clever.integration.entity.mapper.cdr;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
 
 import edu.zju.bme.clever.integration.entity.Patient;
@@ -62,13 +61,13 @@ public class CdrPatientRowMapper implements RowMapper<Patient> {
 	public Patient mapRow(ResultSet rs, int rowNum)
 			throws SQLException {
 		Patient p = new Patient();
-		p.setSerialNo(rs.getInt(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no.toString()));
+		p.setSerialNo(RowMapperUtil.getInteger(rs, CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no.toString()));
 		p.setPatientId(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id.toString()));
 		p.setName(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name.toString()));
 		p.setNamePhonetic(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name_phonetic.toString()));
 		p.setGender(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.gender.toString()));
 		p.setDateOfBirth(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.date_of_birth.toString())));
+				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.date_of_birth.toString())));
 		p.setBirthPlace(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.birth_place.toString()));
 		p.setNationality(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.nationality.toString()));
 		p.setEthnicGroup(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ethnic_group.toString()));
@@ -91,16 +90,16 @@ public class CdrPatientRowMapper implements RowMapper<Patient> {
 		p.setPhoneNoBusiness(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_business.toString()));
 		p.setDeathIndicator(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_indicator.toString()));
 		p.setDeathTime(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_time.toString())));
+				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_time.toString())));
 		p.setCreatedDate(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_date.toString())));
+				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_date.toString())));
 		p.setCreatedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_by.toString()));
 		p.setLastModifyDate(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modify_date.toString())));
+				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modify_date.toString())));
 		p.setLastModifiedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modified_by.toString()));
 		p.setVoidedIndicator(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_indicator.toString()));
 		p.setVoidedDate(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_date.toString())));
+				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_date.toString())));
 		p.setVoidedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_by.toString()));
 		p.setRefPatientId(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ref_patient_id.toString()));
 		p.setInpatientNo(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.inpatientno.toString()));
@@ -110,7 +109,7 @@ public class CdrPatientRowMapper implements RowMapper<Patient> {
 		p.setPatientHealthcareTypeName(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_type_name.toString()));
 		p.setPatientHealthcarePropertyCode(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_code.toString()));
 		p.setPatientHealthcarePropertyName(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_name.toString()));
-		p.set_hibernarmId(rs.getInt(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient._hibernarmId.toString()));
+		p.set_hibernarmId(RowMapperUtil.getInteger(rs, CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient._hibernarmId.toString()));
 		p.set_uid_value(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient._uid_value.toString()));
 		return p;
 	}

@@ -7,6 +7,8 @@ import edu.zju.bme.clever.integration.entity.Patient;
 public interface CdrPatientDao {
 
 	public List<Patient> get(String patientId);
+
+	public List<Patient> get(int serialNo);
 	
 	public int getCount(String patientId);
 	

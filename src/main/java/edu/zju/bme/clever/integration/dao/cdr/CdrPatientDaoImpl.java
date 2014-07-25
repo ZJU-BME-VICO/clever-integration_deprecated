@@ -38,6 +38,18 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 	}
 
 	@Override
+	public List<Patient> get(int serialNo) {
+		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
+		String sql = MessageFormat.format(sqlFormat, 
+				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
+				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no);		
+		Map<String, Object> paramters = new HashMap<String, Object>();
+		paramters.put("serialNo", serialNo);
+		SqlParameterSource source = new MapSqlParameterSource(paramters);
+		return jt.query(sql, source, new CdrPatientRowMapper());
+	}
+
+	@Override
 	public int getCount(String patientId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :patientId";
 		String sql = MessageFormat.format(sqlFormat, 				

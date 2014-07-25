@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Patient {
 
-	private int serialNo;
+	private Integer serialNo;
 	private String patientId;
 	private String name;
 	private String namePhonetic;
@@ -47,18 +47,18 @@ public class Patient {
 	private String patientHealthcareTypeName;
 	private String patientHealthcarePropertyCode;
 	private String patientHealthcarePropertyName;
-	private int _hibernarmId;
+	private Integer _hibernarmId;
 	private String _uid_value;
 	
 	public Patient() {
 		super();
 	}
 
-	public int getSerialNo() {
+	public Integer getSerialNo() {
 		return serialNo;
 	}
 
-	public void setSerialNo(int serialNo) {
+	public void setSerialNo(Integer serialNo) {
 		this.serialNo = serialNo;
 	}
 
@@ -400,11 +400,11 @@ public class Patient {
 		this.voidedBy = voidedBy;
 	}
 
-	public int get_hibernarmId() {
+	public Integer get_hibernarmId() {
 		return _hibernarmId;
 	}
 
-	public void set_hibernarmId(int _hibernarmId) {
+	public void set_hibernarmId(Integer _hibernarmId) {
 		this._hibernarmId = _hibernarmId;
 	}
 

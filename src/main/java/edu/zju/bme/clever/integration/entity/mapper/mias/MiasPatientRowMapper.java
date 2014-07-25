@@ -60,7 +60,7 @@ public class MiasPatientRowMapper implements RowMapper<Patient> {
 	public Patient mapRow(ResultSet rs, int rowNum)
 			throws SQLException {
 		Patient p = new Patient();
-		p.setSerialNo(rs.getInt(MiasPatientRowMapper.MASTER_PATIENT_INDEX.SERIAL_NO.toString()));
+		p.setSerialNo(RowMapperUtil.getInteger(rs, MiasPatientRowMapper.MASTER_PATIENT_INDEX.SERIAL_NO.toString()));
 		p.setPatientId(rs.getString(MiasPatientRowMapper.MASTER_PATIENT_INDEX.PATIENT_ID.toString()));
 		p.setName(rs.getString(MiasPatientRowMapper.MASTER_PATIENT_INDEX.NAME.toString()));
 		p.setNamePhonetic(rs.getString(MiasPatientRowMapper.MASTER_PATIENT_INDEX.NAME_PHONETIC.toString()));
