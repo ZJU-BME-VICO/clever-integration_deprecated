@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.Patient;
 import edu.zju.bme.clever.integration.entity.mapper.cdr.CdrPatientRowMapper;
+import edu.zju.bme.clever.integration.util.CdrCache;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
 import edu.zju.bme.clever.integration.util.RowMapperUtil;
 
@@ -34,7 +35,13 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("patientId", patientId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
-		return jt.query(sql, source, new CdrPatientRowMapper());
+		List<Patient> patients = jt.query(sql, source, new CdrPatientRowMapper());
+		patients.forEach(p -> {
+			Patient k = new Patient();
+			k.setPatientId(patientId);
+			CdrCache.INSTANCE.put(Patient.class, k.hashCode(), p);
+		});
+		return patients;
 	}
 
 	@Override
@@ -46,7 +53,13 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
-		return jt.query(sql, source, new CdrPatientRowMapper());
+		List<Patient> patients = jt.query(sql, source, new CdrPatientRowMapper());
+		patients.forEach(p -> {
+			Patient k = new Patient();
+			k.setSerialNo(serialNo);
+			CdrCache.INSTANCE.put(Patient.class, k.hashCode(), p);
+		});
+		return patients;
 	}
 
 	@Override

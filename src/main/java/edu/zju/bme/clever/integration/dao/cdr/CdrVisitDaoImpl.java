@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.entity.mapper.cdr.CdrVisitRowMapper;
+import edu.zju.bme.clever.integration.util.CdrCache;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
 import edu.zju.bme.clever.integration.util.RowMapperUtil;
 
@@ -34,7 +35,13 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("visitId", visitId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
-		return jt.query(sql, source, new CdrVisitRowMapper());
+		List<Visit> visits = jt.query(sql, source, new CdrVisitRowMapper());
+		visits.forEach(v -> {
+			Visit k = new Visit();
+			k.setVisitId(visitId);
+			CdrCache.INSTANCE.put(Visit.class, k.hashCode(), v);
+		});
+		return visits;
 	}
 
 	@Override

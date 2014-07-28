@@ -13,6 +13,7 @@ import edu.zju.bme.clever.integration.dao.mias.MiasPatientLogDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasVisitDao;
 import edu.zju.bme.clever.integration.entity.Patient;
 import edu.zju.bme.clever.integration.entity.Visit;
+import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("visitService")
 @Transactional
@@ -38,22 +39,32 @@ public class VisitServiceImpl implements VisitService {
 			List<Patient> miasPatients = this.miasPatientLogDao.get(v.getMpimlSerialNo());
 			if (!miasPatients.isEmpty()) {
 				v.setMpimlSerialNo(miasPatients.get(0).getSerialNo());
-				List<Patient> cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
-				if (!cdrPatients.isEmpty()) {
-					v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
+				Patient cachedPatientKey = new Patient();
+				cachedPatientKey.setSerialNo(miasPatients.get(0).getSerialNo());
+				Patient cachedPatient = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedPatientKey.hashCode());
+				if (cachedPatient != null) {
+					v.setIdPatient(cachedPatient.get_hibernarmId());
 					if (this.cdrVisitDao.save(v) == 1) {
 						success = true;
-					}
+					}					
 				} else {
-					if (this.patientService.integrate(miasPatients.get(0).getSerialNo())) {
-						cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
-						if (!cdrPatients.isEmpty()) {
-							v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
-							if (this.cdrVisitDao.save(v) == 1) {
-								success = true;
+					List<Patient> cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
+					if (!cdrPatients.isEmpty()) {
+						v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
+						if (this.cdrVisitDao.save(v) == 1) {
+							success = true;
+						}
+					} else {
+						if (this.patientService.integrate(miasPatients.get(0).getSerialNo())) {
+							cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
+							if (!cdrPatients.isEmpty()) {
+								v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
+								if (this.cdrVisitDao.save(v) == 1) {
+									success = true;
+								}
 							}
 						}
-					}
+					}					
 				}
 			}
 		}
