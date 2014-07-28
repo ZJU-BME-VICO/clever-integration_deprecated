@@ -2,7 +2,7 @@ package edu.zju.bme.clever.integration.entity;
 
 import java.time.LocalDateTime;
 
-public class Patient {
+public class Patient extends Entity {
 
 	private Integer serialNo;
 	private String patientId;

@@ -1,13 +1,23 @@
 package edu.zju.bme.clever.integration.util;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
+
+import org.apache.log4j.Logger;
+
+import edu.zju.bme.snippet.java.Reflector;
 
 public enum CdrCache {
 
 	INSTANCE;
+
+	private static Logger logger = Logger.getLogger(CdrCache.class.getName());
 
 	private final int cacheSize = 1000;
 	private Map<Class<?>, Map<Integer, Object>> cacheMap = new HashMap<>();
@@ -52,6 +62,22 @@ public enum CdrCache {
 
 	public int getCacheSize() {
 		return cacheSize;
+	}
+	
+	public int calculateHashCode(Object target) {
+		Iterable<Field> fields = 
+				Reflector.INSTANCE.getFieldsUpTo(target.getClass(), null);
+		List<Object> values = new ArrayList<>();
+		fields.forEach(f -> {
+			f.setAccessible(true);
+			try {
+				values.add(f.get(target));
+			} catch (Exception e) {
+				logger.error(e);
+			}
+		});
+		
+		return Objects.hash(values);
 	}
 	
 }

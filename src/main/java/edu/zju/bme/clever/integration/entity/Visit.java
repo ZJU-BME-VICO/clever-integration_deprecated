@@ -2,7 +2,7 @@ package edu.zju.bme.clever.integration.entity;
 
 import java.time.LocalDateTime;
 
-public class Visit {
+public class Visit extends Entity {
 
 	private Integer serialNo;
 	private Integer mpimlSerialNo;
