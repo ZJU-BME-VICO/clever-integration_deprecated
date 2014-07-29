@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasPatientRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVisitRowMapper;
 
@@ -26,6 +27,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
+    @Resource(name="orderService")
+    private OrderService orderService;
 
 	@Override
 	public void dispatch() {
@@ -44,7 +47,11 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				if (this.visitService.integrate(iq.get().getLogicalKeyValue())) {
 					iq.get().setStatus(true);
 				}			
-			}			
+			} else if (iq.get().getTableName().compareTo(MiasOrderRowMapper.ORDERS.class.getSimpleName()) == 0) {
+				if (this.orderService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			}
 		} catch (Exception e) {
 			logger.error(e);
 		}
