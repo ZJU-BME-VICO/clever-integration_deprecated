@@ -44,6 +44,19 @@ public class RowMapperUtil {
 		}
 	}
 
+	public static Double getDouble(ResultSet rs, String columnName) throws SQLException {
+		if (rs == null) {
+			return null;
+		} else {
+			Double d = rs.getDouble(columnName);
+			if (rs.wasNull()) {
+				d = null;
+			}
+			
+			return d;
+		}
+	}
+
 	public static Boolean getBoolean(ResultSet rs, String columnName) throws SQLException {
 		if (rs == null) {
 			return null;

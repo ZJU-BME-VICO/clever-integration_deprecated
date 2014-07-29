@@ -118,11 +118,6 @@
 			<version>1.2.17</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.guava</groupId>
-		    <artifactId>guava</artifactId>
-		    <version>17.0</version>
-		</dependency>
-		<dependency>
 			<groupId>edu.zju.bme</groupId>
 			<artifactId>snippet-java</artifactId>
 			<version>1.0.0</version>
