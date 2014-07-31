@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrPatientDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasPatientDao;
 import edu.zju.bme.clever.integration.entity.Patient;
+import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("patientService")
 @Transactional
@@ -41,6 +42,29 @@ public class PatientServiceImpl implements PatientService {
 		
 		return success;
 		
+	}
+
+	@Override
+	public Patient getCachedOrIntegratePatient(String patientId) {
+		Patient cachedPatientKey = new Patient();
+		cachedPatientKey.setPatientId(patientId);
+		Patient cachedPatient = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedPatientKey.hashCode());
+		if (cachedPatient != null) {
+			return cachedPatient;
+		} else {
+			List<Patient> cdrPatients = this.cdrPatientDao.get(patientId);
+			if (!cdrPatients.isEmpty()) {
+				return cdrPatients.get(0);
+			} else {
+				if (this.integrate(patientId)) {
+					cdrPatients = this.cdrPatientDao.get(patientId);
+					if (!cdrPatients.isEmpty()) {
+						return cdrPatients.get(0);
+					}
+				}
+			}					
+		}
+		return null;
 	}
 
 }

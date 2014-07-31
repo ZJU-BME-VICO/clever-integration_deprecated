@@ -72,4 +72,27 @@ public class VisitServiceImpl implements VisitService {
 		return success;
 	}
 
+	@Override
+	public Visit getCachedOrIntegratePatient(String visitId) {
+		Visit cachedVisitKey = new Visit();
+		cachedVisitKey.setVisitId(visitId);
+		Visit cachedVisit = (Visit) CdrCache.INSTANCE.get(Visit.class, cachedVisitKey.hashCode());
+		if (cachedVisit != null) {
+			return cachedVisit;
+		} else {
+			List<Visit> cdrVisits = this.cdrVisitDao.get(visitId);
+			if (!cdrVisits.isEmpty()) {
+				return cdrVisits.get(0);
+			} else {
+				if (this.integrate(visitId)) {
+					cdrVisits = this.cdrVisitDao.get(visitId);
+					if (!cdrVisits.isEmpty()) {
+						return cdrVisits.get(0);
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 }

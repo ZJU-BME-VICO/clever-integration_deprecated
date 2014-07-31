@@ -76,22 +76,7 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					+ ":idPatient)";		
 			String sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()));	
-			Map<String, Object> paramters = new HashMap<String, Object>();
-			paramters.put("mpiml_serial_no", v.getMpimlSerialNo());
-			paramters.put("visit_type", v.getVisitType());
-			paramters.put("visit_id", v.getVisitId());
-			paramters.put("his_visit_id", v.getHisVisitId());
-			paramters.put("his_visit_sub_id", v.getHisVisitSubId());
-			paramters.put("department_code", v.getDepartmentCode());
-			paramters.put("department_name", v.getDepartmentName());
-			paramters.put("ward_code", v.getWardCode());
-			paramters.put("ward_name", v.getWardName());
-			paramters.put("visit_time", RowMapperUtil.getDateTimeString(v.getVisitTime()));
-			paramters.put("status", v.getStatus());
-			paramters.put("serial_no", v.getSerialNo());
-			paramters.put("_uid_value", v.get_uid_value());
-			paramters.put("idPatient", v.getIdPatient());
-			SqlParameterSource source = new MapSqlParameterSource(paramters);
+			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
 			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
@@ -124,24 +109,28 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit._uid_value.toString(),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.idPatient.toString(),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_id.toString());
-			Map<String, Object> paramters = new HashMap<String, Object>();
-			paramters.put("mpiml_serial_no", v.getMpimlSerialNo());
-			paramters.put("visit_type", v.getVisitType());
-			paramters.put("his_visit_id", v.getHisVisitId());
-			paramters.put("his_visit_sub_id", v.getHisVisitSubId());
-			paramters.put("department_code", v.getDepartmentCode());
-			paramters.put("department_name", v.getDepartmentName());
-			paramters.put("ward_code", v.getWardCode());
-			paramters.put("ward_name", v.getWardName());
-			paramters.put("visit_time", RowMapperUtil.getDateTimeString(v.getVisitTime()));
-			paramters.put("status", v.getStatus());
-			paramters.put("serial_no", v.getSerialNo());
-			paramters.put("_uid_value", v.get_uid_value());
-			paramters.put("idPatient", v.getIdPatient());
-			paramters.put("visit_id", v.getVisitId());
-			SqlParameterSource source = new MapSqlParameterSource(paramters);
+			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
 			return jt.update(sql, source);			
 		}
+	}
+	
+	private Map<String, Object> putParameters(Visit v) {
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("mpiml_serial_no", v.getMpimlSerialNo());
+		parameters.put("visit_type", v.getVisitType());
+		parameters.put("visit_id", v.getVisitId());
+		parameters.put("his_visit_id", v.getHisVisitId());
+		parameters.put("his_visit_sub_id", v.getHisVisitSubId());
+		parameters.put("department_code", v.getDepartmentCode());
+		parameters.put("department_name", v.getDepartmentName());
+		parameters.put("ward_code", v.getWardCode());
+		parameters.put("ward_name", v.getWardName());
+		parameters.put("visit_time", RowMapperUtil.getDateTimeString(v.getVisitTime()));
+		parameters.put("status", v.getStatus());
+		parameters.put("serial_no", v.getSerialNo());
+		parameters.put("_uid_value", v.get_uid_value());
+		parameters.put("idPatient", v.getIdPatient());
+		return parameters;
 	}
 	
 }
