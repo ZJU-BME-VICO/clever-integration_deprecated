@@ -7,35 +7,38 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.zju.bme.clever.integration.dao.cdr.CdrLabTestRequestDao;
-import edu.zju.bme.clever.integration.dao.mias.MiasLabTestRequestDao;
+import edu.zju.bme.clever.integration.dao.cdr.CdrLabTestMasterDao;
+import edu.zju.bme.clever.integration.dao.mias.MiasLabTestMasterDao;
+import edu.zju.bme.clever.integration.entity.LabTestMaster;
 import edu.zju.bme.clever.integration.entity.LabTestRequest;
 import edu.zju.bme.clever.integration.entity.Order;
 import edu.zju.bme.clever.integration.entity.Patient;
 import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
-@Service("labTestRequestService")
+@Service("labTestMasterService")
 @Transactional
-public class LabTestRequestServiceImpl implements LabTestRequestService {
+public class LabTestMasterServiceImpl implements LabTestMasterService {
 
-    @Resource(name="miasLabTestRequestDao")
-    private MiasLabTestRequestDao miasLabTestRequestDao;
-    @Resource(name="cdrLabTestRequestDao")    
-    private CdrLabTestRequestDao cdrLabTestRequestDao;
+    @Resource(name="miasLabTestMasterDao")
+    private MiasLabTestMasterDao miasLabTestMasterDao;
+    @Resource(name="cdrLabTestMasterDao")    
+    private CdrLabTestMasterDao cdrLabTestMasterDao;
     @Resource(name="patientService")
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
     @Resource(name="orderService")
     private OrderService orderService;
+    @Resource(name="labTestRequestService")
+    private LabTestRequestService labTestRequestService;
 
 	@Override
-	public Boolean integrate(String testReqId) {
-		List<LabTestRequest> labTestRequests = this.miasLabTestRequestDao.get(testReqId);
+	public Boolean integrate(String testId) {
+		List<LabTestMaster> labTestMasters = this.miasLabTestMasterDao.get(testId);
 		Boolean success = false;
-		if (labTestRequests.size() == 1) {
-			LabTestRequest l = labTestRequests.get(0);
+		if (labTestMasters.size() == 1) {
+			LabTestMaster l = labTestMasters.get(0);
 			
 			Patient p = this.patientService.cachedOrIntegrate(l.getPatientId());
 			if (p != null) {
@@ -51,8 +54,13 @@ public class LabTestRequestServiceImpl implements LabTestRequestService {
 			if (o != null) {
 				l.setIdOrder(o.get_hibernarmId());
 			}
+			
+			LabTestRequest labTestRequest = this.labTestRequestService.cachedOrIntegrate(l.getTestReqId());
+			if (labTestRequest != null) {
+				l.setIdLabTestRequest(labTestRequest.get_hibernarmId());
+			}
 
-			if (this.cdrLabTestRequestDao.save(l) == 1) {
+			if (this.cdrLabTestMasterDao.save(l) == 1) {
 				success = true;
 			}			
 		}
@@ -61,19 +69,19 @@ public class LabTestRequestServiceImpl implements LabTestRequestService {
 	}
 
 	@Override
-	public LabTestRequest cachedOrIntegrate(String key) {
-		LabTestRequest cachedKey = new LabTestRequest();
+	public LabTestMaster cachedOrIntegrate(String key) {
+		LabTestMaster cachedKey = new LabTestMaster();
 		cachedKey.setTestReqId(key);
-		LabTestRequest cachedObject = (LabTestRequest) CdrCache.INSTANCE.get(LabTestRequest.class, cachedKey.hashCode());
+		LabTestMaster cachedObject = (LabTestMaster) CdrCache.INSTANCE.get(LabTestMaster.class, cachedKey.hashCode());
 		if (cachedObject != null) {
 			return cachedObject;
 		} else {
-			List<LabTestRequest> cdrObjects = this.cdrLabTestRequestDao.get(key);
+			List<LabTestMaster> cdrObjects = this.cdrLabTestMasterDao.get(key);
 			if (!cdrObjects.isEmpty()) {
 				return cdrObjects.get(0);
 			} else {
 				if (this.integrate(key)) {
-					cdrObjects = this.cdrLabTestRequestDao.get(key);
+					cdrObjects = this.cdrLabTestMasterDao.get(key);
 					if (!cdrObjects.isEmpty()) {
 						return cdrObjects.get(0);
 					}

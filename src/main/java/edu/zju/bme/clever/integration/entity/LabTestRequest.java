@@ -7,7 +7,7 @@ public class LabTestRequest extends Entity {
 	private String testReqId;
 	private String patientId;
 	private String visitId;
-	private String orderId;
+	private Integer orderId;
 	private LocalDateTime reqDateTime;
 	private String reqDeptName;
 	private String reqDeptId;
@@ -62,11 +62,11 @@ public class LabTestRequest extends Entity {
 		this.visitId = visitId;
 	}
 
-	public String getOrderId() {
+	public Integer getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(String orderId) {
+	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
 

@@ -8,6 +8,8 @@ public interface PatientService {
 
 	public Boolean integrate(int serialNo);
 	
-	public Patient getCachedOrIntegratePatient(String patientId);
+	public Patient cachedOrIntegrate(String key);
+	
+	public Patient cachedOrIntegrate(int key);
 	
 }
