@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestDataRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestMasterRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestRequestRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
@@ -35,6 +36,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private LabTestRequestService labTestRequestService;
     @Resource(name="labTestMasterService")
     private LabTestMasterService labTestMasterService;
+    @Resource(name="labTestDataService")
+    private LabTestDataService labTestDataService;
 
 	@Override
 	public void dispatch() {
@@ -63,6 +66,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasLabTestMasterRowMapper.LAB_TEST_MASTER.class.toString()) == 0) {
 				if (this.labTestMasterService.integrate(iq.get().getLogicalKeyValue())) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasLabTestDataRowMapper.LAB_TEST_DATA.class.getSimpleName()) == 0) {
+				if (this.labTestDataService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}

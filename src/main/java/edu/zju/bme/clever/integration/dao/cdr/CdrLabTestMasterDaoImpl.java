@@ -58,7 +58,7 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 
 	@Override
 	public int save(LabTestMaster l) {
-		if (this.getCount(l.getTestReqId()) <= 0) {
+		if (this.getCount(l.getTestId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":test_id, "
 					+ ":patient_id, "
@@ -121,7 +121,6 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					+ "{26} = :idOrder WHERE {27} = :test_id";	
 			String sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()),
-
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.patient_id.toString(),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.visit_id.toString(),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_req_id.toString(),

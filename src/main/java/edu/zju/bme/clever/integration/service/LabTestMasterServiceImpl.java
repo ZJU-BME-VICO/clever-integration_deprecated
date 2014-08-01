@@ -14,6 +14,7 @@ import edu.zju.bme.clever.integration.entity.LabTestRequest;
 import edu.zju.bme.clever.integration.entity.Order;
 import edu.zju.bme.clever.integration.entity.Patient;
 import edu.zju.bme.clever.integration.entity.Visit;
+import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("labTestMasterService")
 @Transactional
@@ -56,7 +57,7 @@ public class LabTestMasterServiceImpl implements LabTestMasterService {
 			
 			LabTestRequest labTestRequest = this.labTestRequestService.cachedOrIntegrate(l.getTestReqId());
 			if (labTestRequest != null) {
-				l.setIdLabTestRequest(o.get_hibernarmId());
+				l.setIdLabTestRequest(labTestRequest.get_hibernarmId());
 			}
 
 			if (this.cdrLabTestMasterDao.save(l) == 1) {
@@ -65,6 +66,29 @@ public class LabTestMasterServiceImpl implements LabTestMasterService {
 		}
 		
 		return success;
+	}
+
+	@Override
+	public LabTestMaster cachedOrIntegrate(String key) {
+		LabTestMaster cachedKey = new LabTestMaster();
+		cachedKey.setTestReqId(key);
+		LabTestMaster cachedObject = (LabTestMaster) CdrCache.INSTANCE.get(LabTestMaster.class, cachedKey.hashCode());
+		if (cachedObject != null) {
+			return cachedObject;
+		} else {
+			List<LabTestMaster> cdrObjects = this.cdrLabTestMasterDao.get(key);
+			if (!cdrObjects.isEmpty()) {
+				return cdrObjects.get(0);
+			} else {
+				if (this.integrate(key)) {
+					cdrObjects = this.cdrLabTestMasterDao.get(key);
+					if (!cdrObjects.isEmpty()) {
+						return cdrObjects.get(0);
+					}
+				}
+			}					
+		}
+		return null;
 	}
 
 }
