@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestRequestRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasPatientRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVisitRowMapper;
@@ -29,6 +30,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private VisitService visitService;
     @Resource(name="orderService")
     private OrderService orderService;
+    @Resource(name="labTestRequestService")
+    private LabTestRequestService labTestRequestService;
 
 	@Override
 	public void dispatch() {
@@ -49,6 +52,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}			
 			} else if (iq.get().getTableName().compareTo(MiasOrderRowMapper.ORDERS.class.getSimpleName()) == 0) {
 				if (this.orderService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.class.getSimpleName()) == 0) {
+				if (this.labTestRequestService.integrate(iq.get().getLogicalKeyValue())) {
 					iq.get().setStatus(true);
 				}
 			}
