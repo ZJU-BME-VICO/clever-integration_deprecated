@@ -50,7 +50,7 @@ public class CdrLabTestRequestRowMapper implements RowMapper<LabTestRequest> {
 		l.setTestReqId(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id.toString()));
 		l.setPatientId(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.patient_id.toString()));
 		l.setVisitId(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.visit_id.toString()));
-		l.setOrderId(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.order_id.toString()));
+		l.setOrderId(RowMapperUtil.getInteger(rs, CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.order_id.toString()));
 		l.setReqDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_date_time.toString())));
 		l.setReqDeptName(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_dept_name.toString()));
 		l.setReqDeptId(rs.getString(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_dept_id.toString()));

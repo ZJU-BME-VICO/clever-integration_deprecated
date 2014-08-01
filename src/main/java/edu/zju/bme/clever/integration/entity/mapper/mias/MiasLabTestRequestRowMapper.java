@@ -44,7 +44,7 @@ public class MiasLabTestRequestRowMapper implements RowMapper<LabTestRequest> {
 		l.setTestReqId(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.TEST_REQ_ID.toString()));
 		l.setPatientId(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.PATIENT_ID.toString()));
 		l.setVisitId(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.VISIT_ID.toString()));
-		l.setOrderId(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.ORDER_ID.toString()));
+		l.setOrderId(RowMapperUtil.getInteger(rs, MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.ORDER_ID.toString()));
 		l.setReqDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.REQ_DATE_TIME.toString())));
 		l.setReqDeptName(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.REQ_DEPT_NAME.toString()));
 		l.setReqDeptId(rs.getString(MiasLabTestRequestRowMapper.LAB_TEST_REQUEST.REQ_DEPT_ID.toString()));

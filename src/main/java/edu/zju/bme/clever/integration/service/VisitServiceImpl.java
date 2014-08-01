@@ -39,32 +39,14 @@ public class VisitServiceImpl implements VisitService {
 			List<Patient> miasPatients = this.miasPatientLogDao.get(v.getMpimlSerialNo());
 			if (!miasPatients.isEmpty()) {
 				v.setMpimlSerialNo(miasPatients.get(0).getSerialNo());
-				Patient cachedPatientKey = new Patient();
-				cachedPatientKey.setSerialNo(miasPatients.get(0).getSerialNo());
-				Patient cachedPatient = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedPatientKey.hashCode());
-				if (cachedPatient != null) {
-					v.setIdPatient(cachedPatient.get_hibernarmId());
-					if (this.cdrVisitDao.save(v) == 1) {
-						success = true;
-					}					
-				} else {
-					List<Patient> cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
-					if (!cdrPatients.isEmpty()) {
-						v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
-						if (this.cdrVisitDao.save(v) == 1) {
-							success = true;
-						}
-					} else {
-						if (this.patientService.integrate(miasPatients.get(0).getSerialNo())) {
-							cdrPatients = this.cdrPatientDao.get(miasPatients.get(0).getSerialNo());
-							if (!cdrPatients.isEmpty()) {
-								v.setIdPatient(cdrPatients.get(0).get_hibernarmId());
-								if (this.cdrVisitDao.save(v) == 1) {
-									success = true;
-								}
-							}
-						}
-					}					
+				
+				Patient p = this.patientService.cachedOrIntegrate(miasPatients.get(0).getSerialNo());
+				if (p != null) {
+					v.setIdPatient(p.get_hibernarmId());
+				}
+
+				if (this.cdrVisitDao.save(v) == 1) {
+					success = true;
 				}
 			}
 		}
@@ -73,21 +55,21 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
-	public Visit getCachedOrIntegratePatient(String visitId) {
-		Visit cachedVisitKey = new Visit();
-		cachedVisitKey.setVisitId(visitId);
-		Visit cachedVisit = (Visit) CdrCache.INSTANCE.get(Visit.class, cachedVisitKey.hashCode());
-		if (cachedVisit != null) {
-			return cachedVisit;
+	public Visit cachedOrIntegrate(String key) {
+		Visit cachedKey = new Visit();
+		cachedKey.setVisitId(key);
+		Visit cachedObject = (Visit) CdrCache.INSTANCE.get(Visit.class, cachedKey.hashCode());
+		if (cachedObject != null) {
+			return cachedObject;
 		} else {
-			List<Visit> cdrVisits = this.cdrVisitDao.get(visitId);
-			if (!cdrVisits.isEmpty()) {
-				return cdrVisits.get(0);
+			List<Visit> cdrObjects = this.cdrVisitDao.get(key);
+			if (!cdrObjects.isEmpty()) {
+				return cdrObjects.get(0);
 			} else {
-				if (this.integrate(visitId)) {
-					cdrVisits = this.cdrVisitDao.get(visitId);
-					if (!cdrVisits.isEmpty()) {
-						return cdrVisits.get(0);
+				if (this.integrate(key)) {
+					cdrObjects = this.cdrVisitDao.get(key);
+					if (!cdrObjects.isEmpty()) {
+						return cdrObjects.get(0);
 					}
 				}
 			}

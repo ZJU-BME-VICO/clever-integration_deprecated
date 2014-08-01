@@ -6,6 +6,6 @@ public interface VisitService {
 
 	public Boolean integrate(String visitId);
 	
-	public Visit getCachedOrIntegratePatient(String visitId);
+	public Visit cachedOrIntegrate(String key);
 	
 }

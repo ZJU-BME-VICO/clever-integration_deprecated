@@ -45,21 +45,44 @@ public class PatientServiceImpl implements PatientService {
 	}
 
 	@Override
-	public Patient getCachedOrIntegratePatient(String patientId) {
-		Patient cachedPatientKey = new Patient();
-		cachedPatientKey.setPatientId(patientId);
-		Patient cachedPatient = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedPatientKey.hashCode());
-		if (cachedPatient != null) {
-			return cachedPatient;
+	public Patient cachedOrIntegrate(String key) {
+		Patient cachedKey = new Patient();
+		cachedKey.setPatientId(key);
+		Patient cachedObject = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedKey.hashCode());
+		if (cachedObject != null) {
+			return cachedObject;
 		} else {
-			List<Patient> cdrPatients = this.cdrPatientDao.get(patientId);
-			if (!cdrPatients.isEmpty()) {
-				return cdrPatients.get(0);
+			List<Patient> cdrObjects = this.cdrPatientDao.get(key);
+			if (!cdrObjects.isEmpty()) {
+				return cdrObjects.get(0);
 			} else {
-				if (this.integrate(patientId)) {
-					cdrPatients = this.cdrPatientDao.get(patientId);
-					if (!cdrPatients.isEmpty()) {
-						return cdrPatients.get(0);
+				if (this.integrate(key)) {
+					cdrObjects = this.cdrPatientDao.get(key);
+					if (!cdrObjects.isEmpty()) {
+						return cdrObjects.get(0);
+					}
+				}
+			}					
+		}
+		return null;
+	}
+
+	@Override
+	public Patient cachedOrIntegrate(int key) {
+		Patient cachedKey = new Patient();
+		cachedKey.setSerialNo(key);
+		Patient cachedObject = (Patient) CdrCache.INSTANCE.get(Patient.class, cachedKey.hashCode());
+		if (cachedObject != null) {
+			return cachedObject;
+		} else {
+			List<Patient> cdrObjects = this.cdrPatientDao.get(key);
+			if (!cdrObjects.isEmpty()) {
+				return cdrObjects.get(0);
+			} else {
+				if (this.integrate(key)) {
+					cdrObjects = this.cdrPatientDao.get(key);
+					if (!cdrObjects.isEmpty()) {
+						return cdrObjects.get(0);
 					}
 				}
 			}					

@@ -12,6 +12,7 @@ import edu.zju.bme.clever.integration.dao.mias.MiasOrderDao;
 import edu.zju.bme.clever.integration.entity.Order;
 import edu.zju.bme.clever.integration.entity.Patient;
 import edu.zju.bme.clever.integration.entity.Visit;
+import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("orderService")
 @Transactional
@@ -27,18 +28,18 @@ public class OrderServiceImpl implements OrderService {
     private VisitService visitService;
 
 	@Override
-	public Boolean integrate(Integer orderId) {
+	public Boolean integrate(int orderId) {
 		List<Order> orders = this.miasOrderDao.get(orderId);
 		Boolean success = false;
 		if (orders.size() == 1) {
 			Order o = orders.get(0);
 			
-			Patient p = this.patientService.getCachedOrIntegratePatient(o.getPatientId());
+			Patient p = this.patientService.cachedOrIntegrate(o.getPatientId());
 			if (p != null) {
 				o.setIdPatient(p.get_hibernarmId());
 			}
 			
-			Visit v = this.visitService.getCachedOrIntegratePatient(o.getVisitId());
+			Visit v = this.visitService.cachedOrIntegrate(o.getVisitId());
 			if (v != null) {
 				o.setIdVisit(v.get_hibernarmId());
 			}
@@ -49,6 +50,29 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		return success;
+	}
+
+	@Override
+	public Order cachedOrIntegrate(int key) {
+		Order cachedKey = new Order();
+		cachedKey.setOrderId(key);
+		Order cachedObject = (Order) CdrCache.INSTANCE.get(Order.class, cachedKey.hashCode());
+		if (cachedObject != null) {
+			return cachedObject;
+		} else {
+			List<Order> cdrObjects = this.cdrOrderDao.get(key);
+			if (!cdrObjects.isEmpty()) {
+				return cdrObjects.get(0);
+			} else {
+				if (this.integrate(key)) {
+					cdrObjects = this.cdrOrderDao.get(key);
+					if (!cdrObjects.isEmpty()) {
+						return cdrObjects.get(0);
+					}
+				}
+			}					
+		}
+		return null;
 	}
 
 }
