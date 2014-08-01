@@ -26,8 +26,6 @@ public class LabTestDataServiceImpl implements LabTestDataService {
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
-    @Resource(name="orderService")
-    private OrderService orderService;
     @Resource(name="labTestMasterService")
     private LabTestMasterService labTestMasterService;
 
