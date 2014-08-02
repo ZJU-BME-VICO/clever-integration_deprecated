@@ -24,14 +24,26 @@ public class MiasExamMasterDaoImpl implements MiasExamMasterDao {
     @Resource(name="jdbcTemplate")
     private NamedParameterJdbcTemplate jt;
 
+//	@Override
+//	public List<ExamMaster> get(int serialNo) {
+//		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
+//		String sql = MessageFormat.format(sqlFormat, 
+//				DatabaseUtil.getMiasDatabaseTableName(MiasExamMasterRowMapper.EXAM_MASTER.class.getSimpleName()),
+//				MiasExamMasterRowMapper.EXAM_MASTER.SERIAL_NO);	
+//		Map<String, Object> paramters = new HashMap<String, Object>();
+//		paramters.put("serialNo", serialNo);
+//		SqlParameterSource source = new MapSqlParameterSource(paramters);
+//		return jt.query(sql, source, new MiasExamMasterRowMapper());
+//	}
+
 	@Override
-	public List<ExamMaster> get(int serialNo) {
-		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
+	public List<ExamMaster> get(String examId) {
+		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :examId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getMiasDatabaseTableName(MiasExamMasterRowMapper.EXAM_MASTER.class.getSimpleName()),
-				MiasExamMasterRowMapper.EXAM_MASTER.SERIAL_NO);	
+				MiasExamMasterRowMapper.EXAM_MASTER.EXAM_ID);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
-		paramters.put("serialNo", serialNo);
+		paramters.put("examId", examId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
 		return jt.query(sql, source, new MiasExamMasterRowMapper());
 	}

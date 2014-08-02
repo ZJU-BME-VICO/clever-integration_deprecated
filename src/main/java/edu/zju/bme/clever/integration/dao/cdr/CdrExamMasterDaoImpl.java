@@ -26,39 +26,69 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
     @Resource(name="jdbcTemplate")
     private NamedParameterJdbcTemplate jt;
 
+//	@Override
+//	public List<ExamMaster> get(int serialNo) {
+//		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
+//		String sql = MessageFormat.format(sqlFormat, 
+//				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
+//				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.serial_no);		
+//		Map<String, Object> paramters = new HashMap<String, Object>();
+//		paramters.put("serialNo", serialNo);
+//		SqlParameterSource source = new MapSqlParameterSource(paramters);
+//		List<ExamMaster> examRequests = jt.query(sql, source, new CdrExamMasterRowMapper());
+//		examRequests.forEach(l -> {
+//			ExamMaster k = new ExamMaster();
+//			k.setSerialNo(serialNo);
+//			CdrCache.INSTANCE.put(ExamMaster.class, k.hashCode(), l);
+//		});
+//		return examRequests;
+//	}
+
 	@Override
-	public List<ExamMaster> get(int serialNo) {
-		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
+	public List<ExamMaster> get(String examId) {
+		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :examId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_req_id);		
+				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
-		paramters.put("serialNo", serialNo);
+		paramters.put("examId", examId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
 		List<ExamMaster> examRequests = jt.query(sql, source, new CdrExamMasterRowMapper());
 		examRequests.forEach(l -> {
 			ExamMaster k = new ExamMaster();
-			k.setSerialNo(serialNo);
+			k.setExamId(examId);
 			CdrCache.INSTANCE.put(ExamMaster.class, k.hashCode(), l);
 		});
 		return examRequests;
 	}
 
+//	@Override
+//	public int getCount(int serialNo) {
+//		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :serialNo";
+//		String sql = MessageFormat.format(sqlFormat, 				
+//				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
+//				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.serial_no);
+//		Map<String, Object> paramters = new HashMap<String, Object>();
+//		paramters.put("serialNo", serialNo);
+//		SqlParameterSource source = new MapSqlParameterSource(paramters);
+//		return jt.queryForObject(sql, source, Integer.class);
+//	}
+
 	@Override
-	public int getCount(int serialNo) {
-		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :serialNo";
+	public int getCount(String examId) {
+		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :examId";
 		String sql = MessageFormat.format(sqlFormat, 				
 				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_req_id);
+				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id);
 		Map<String, Object> paramters = new HashMap<String, Object>();
-		paramters.put("serialNo", serialNo);
+		paramters.put("examId", examId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
 		return jt.queryForObject(sql, source, Integer.class);
 	}
 
 	@Override
 	public int save(ExamMaster e) {
-		if (this.getCount(e.getSerialNo()) <= 0) {
+		if (this.getCount(e.getExamId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":exam_id, "
 					+ ":patient_id, "
@@ -101,7 +131,6 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 					+ "{16} = :idExamRequest WHERE {17} = :serial_no";	
 			String sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-
 					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id.toString(),
 					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.patient_id.toString(),
 					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.visit_id.toString(),
