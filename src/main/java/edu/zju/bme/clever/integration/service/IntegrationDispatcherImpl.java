@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamDataRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamItemRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamMasterRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamRequestRowMapper;
@@ -50,6 +51,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private ExamMasterService examMasterService;
     @Resource(name="examItemService")
     private ExamItemService examItemService;
+    @Resource(name="examDataService")
+    private ExamDataService examDataService;
 
 	@Override
 	public void dispatch() {
@@ -101,6 +104,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasExamItemRowMapper.EXAM_ITEM.class.getSimpleName()) == 0) {
 				if (this.examItemService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamDataRowMapper.EXAM_DATA.class.getSimpleName()) == 0) {
+				if (this.examDataService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}

@@ -29,10 +29,10 @@ public class ExamItemServiceImpl implements ExamItemService {
 
 	@Override
 	public Boolean integrate(int serialNo) {
-		List<ExamItem> examMasters = this.miasExamItemDao.get(serialNo);
+		List<ExamItem> examItems = this.miasExamItemDao.get(serialNo);
 		Boolean success = false;
-		if (examMasters.size() == 1) {
-			ExamItem e = examMasters.get(0);
+		if (examItems.size() == 1) {
+			ExamItem e = examItems.get(0);
 			
 			ExamRequest examRequest = this.examRequestService.cachedOrIntegrate(e.getExamReqId());
 			if (examRequest != null) {
