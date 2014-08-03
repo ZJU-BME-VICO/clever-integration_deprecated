@@ -13,6 +13,7 @@ import edu.zju.bme.clever.integration.entity.IntegrationQueue;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamDataRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamItemRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamMasterRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamReportRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamRequestRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestActionRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestDataRowMapper;
@@ -53,6 +54,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private ExamItemService examItemService;
     @Resource(name="examDataService")
     private ExamDataService examDataService;
+    @Resource(name="examReportService")
+    private ExamReportService examReportService;
 
 	@Override
 	public void dispatch() {
@@ -108,6 +111,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasExamDataRowMapper.EXAM_DATA.class.getSimpleName()) == 0) {
 				if (this.examDataService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamReportRowMapper.EXAM_REPORT.class.getSimpleName()) == 0) {
+				if (this.examReportService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}
