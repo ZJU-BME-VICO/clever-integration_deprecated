@@ -25,7 +25,7 @@ public class MiasOrderDaoImpl implements MiasOrderDao {
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<Order> get(Integer orderId) {
+	public List<Order> get(int orderId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :orderId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getMiasDatabaseTableName(MiasOrderRowMapper.ORDERS.class.getSimpleName()),

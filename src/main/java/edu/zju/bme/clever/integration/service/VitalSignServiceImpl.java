@@ -28,7 +28,7 @@ public class VitalSignServiceImpl implements VitalSignService {
     private VisitService visitService;
     
 	@Override
-	public Boolean integrate(Integer recordId) {
+	public Boolean integrate(int recordId) {
 		List<VitalSign> vitalSigns = this.miasVitalSignDao.get(recordId);
 		Boolean success = false;
 		if (vitalSigns.size() == 1) {
@@ -53,7 +53,7 @@ public class VitalSignServiceImpl implements VitalSignService {
 	}
 
 	@Override
-	public VitalSign cachedOrIntegrate(Integer key) {
+	public VitalSign cachedOrIntegrate(int key) {
 		VitalSign cachedKey = new VitalSign();
 		cachedKey.setRecordId(key);
 		VitalSign cachedObject = (VitalSign) CdrCache.INSTANCE.get(VitalSign.class, cachedKey.hashCode());

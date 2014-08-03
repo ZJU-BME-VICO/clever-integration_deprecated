@@ -27,7 +27,7 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<VitalSign> get(Integer recordId) {
+	public List<VitalSign> get(int recordId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :recordId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getCdrDatabaseTableName(CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.class.getSimpleName()),
@@ -45,7 +45,7 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
 	}
 
 	@Override
-	public int getCount(Integer recordId) {
+	public int getCount(int recordId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :recordId";
 		String sql = MessageFormat.format(sqlFormat, 				
 				DatabaseUtil.getCdrDatabaseTableName(CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.class.getSimpleName()),

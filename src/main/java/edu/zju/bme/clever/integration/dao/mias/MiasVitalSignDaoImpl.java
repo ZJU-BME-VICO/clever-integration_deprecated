@@ -25,7 +25,7 @@ public class MiasVitalSignDaoImpl implements MiasVitalSignDao {
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<VitalSign> get(Integer recordId) {
+	public List<VitalSign> get(int recordId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :recordId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getMiasDatabaseTableName(MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.class.getSimpleName()),

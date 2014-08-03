@@ -6,6 +6,6 @@ import edu.zju.bme.clever.integration.entity.VitalSign;
 
 public interface MiasVitalSignDao {
 
-	public List<VitalSign> get(Integer recordId);
+	public List<VitalSign> get(int recordId);
 
 }

@@ -6,9 +6,9 @@ import edu.zju.bme.clever.integration.entity.VitalSign;
 
 public interface CdrVitalSignDao {
 
-	public List<VitalSign> get(Integer recordId);
+	public List<VitalSign> get(int recordId);
 	
-	public int getCount(Integer recordId);
+	public int getCount(int recordId);
 	
 	public int save(VitalSign v);
 

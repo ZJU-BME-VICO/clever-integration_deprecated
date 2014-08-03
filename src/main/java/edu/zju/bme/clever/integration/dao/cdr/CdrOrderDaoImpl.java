@@ -27,7 +27,7 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<Order> get(Integer orderId) {
+	public List<Order> get(int orderId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :orderId";
 		String sql = MessageFormat.format(sqlFormat, 
 				DatabaseUtil.getCdrDatabaseTableName(CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.class.getSimpleName()),
@@ -45,7 +45,7 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
 	}
 
 	@Override
-	public int getCount(Integer orderId) {
+	public int getCount(int orderId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :orderId";
 		String sql = MessageFormat.format(sqlFormat, 				
 				DatabaseUtil.getCdrDatabaseTableName(CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.class.getSimpleName()),
