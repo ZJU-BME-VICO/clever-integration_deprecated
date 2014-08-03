@@ -23,6 +23,7 @@ import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestRequestRowMa
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasPatientRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVisitRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVitalSignRowMapper;
 
 
 @Service("integrationDispatcher")
@@ -59,6 +60,8 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private ExamReportService examReportService;
     @Resource(name="examActionService")
     private ExamActionService examActionService;
+    @Resource(name="vitalSignService")
+    private VitalSignService vitalSignService;
 
 	@Override
 	public void dispatch() {
@@ -122,6 +125,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasExamActionRowMapper.EXAM_ACTION.class.getSimpleName()) == 0) {
 				if (this.examActionService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.class.getSimpleName()) == 0) {
+				if (this.vitalSignService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}
