@@ -26,6 +26,11 @@ public enum CdrCache {
 	private CdrCache() {
 	}
 	
+	public void clear() {
+		cacheMap.clear();
+		cacheQueue.clear();
+	}
+	
 	public void put(Class<?> c, Integer k, Object o) {
 		if (cacheMap.containsKey(c)) {
 			Map<Integer, Object> map = cacheMap.get(c);
@@ -54,7 +59,9 @@ public enum CdrCache {
 	public Object get(Class<?> c, Integer k) {
 		if (cacheMap.containsKey(c)) {
 			Map<Integer, Object> map = cacheMap.get(c);
-			return map.get(k);
+			if (map != null) {
+				return map.get(k);				
+			}
 		}
 		
 		return null;
