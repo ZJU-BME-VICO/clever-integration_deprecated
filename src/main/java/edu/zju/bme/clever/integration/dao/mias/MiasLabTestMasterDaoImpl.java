@@ -17,7 +17,7 @@ import edu.zju.bme.clever.integration.entity.LabTestMaster;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestMasterRowMapper;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
 
-@Service("miasLabTestRequestDao")
+@Service("miasLabTestMasterDao")
 @Transactional
 public class MiasLabTestMasterDaoImpl implements MiasLabTestMasterDao {
 
