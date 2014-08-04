@@ -42,8 +42,7 @@ public class CdrVisitRowMapper implements RowMapper<Visit> {
 		v.setDepartmentName(rs.getString(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.department_name.toString()));
 		v.setWardCode(rs.getString(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.ward_code.toString()));
 		v.setWardName(rs.getString(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.ward_name.toString()));
-		v.setVisitTime(RowMapperUtil.getDateTime(
-				rs.getTimestamp(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_time.toString())));
+		v.setVisitTime(RowMapperUtil.getDateTime(rs.getString(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_time.toString())));
 		v.setStatus(RowMapperUtil.getInteger(rs, CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.status.toString()));
 		v.setSerialNo(RowMapperUtil.getInteger(rs, CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.serial_no.toString()));
 		v.set_uid_value(rs.getString(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit._uid_value.toString()));

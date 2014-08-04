@@ -1,5 +1,6 @@
 package edu.zju.bme.clever.integration.dao.cdr;
 
+import java.sql.Types;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.jdbc.core.namedparam.AbstractSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -58,6 +60,9 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
 
 	@Override
 	public int save(Order o) {
+		String sql = "";
+		AbstractSqlParameterSource source = new MapSqlParameterSource(this.putParameters(o));
+		source.registerSqlType("dosage", Types.FLOAT);
 		if (this.getCount(o.getOrderId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":order_id, "
@@ -114,10 +119,8 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
 					+ ":_uid_value, "
 					+ ":idPatient, "
 					+ ":idVisit)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat,
 					DatabaseUtil.getCdrDatabaseTableName(CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(o));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -173,7 +176,7 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
 					+ "{51} = :_uid_value, "
 					+ "{52} = :idPatient, "
 					+ "{53} = :idVisit WHERE {54} = :order_id";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.class.getSimpleName()),
 					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.patient_id.toString(),
 					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.visit_id.toString(),
@@ -228,10 +231,9 @@ public class CdrOrderDaoImpl implements CdrOrderDao {
 					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order._uid_value.toString(),
 					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.idPatient.toString(),
 					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.idVisit.toString(),
-					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.order_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(o));
-			return jt.update(sql, source);			
+					CdrOrderRowMapper.openEHR_EHR_INSTRUCTION_order.order_id.toString());	
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(Order o) {

@@ -83,7 +83,7 @@ public class MiasOrderRowMapper implements RowMapper<Order> {
 		o.setOrderClass(rs.getString(MiasOrderRowMapper.ORDERS.ORDER_CLASS.toString()));
 		o.setOrderText(rs.getString(MiasOrderRowMapper.ORDERS.ORDER_TEXT.toString()));
 		o.setOrderCode(rs.getString(MiasOrderRowMapper.ORDERS.ORDER_CODE.toString()));
-		o.setDosage(RowMapperUtil.getDouble(rs, MiasOrderRowMapper.ORDERS.DOSAGE.toString()));
+		o.setDosage(RowMapperUtil.getFloat(rs, MiasOrderRowMapper.ORDERS.DOSAGE.toString()));
 		o.setDosageUnits(rs.getString(MiasOrderRowMapper.ORDERS.DOSAGE_UNITS.toString()));
 		o.setAdministrationCode(rs.getString(MiasOrderRowMapper.ORDERS.ADMINISTRATION_CODE.toString()));
 		o.setAdministration(rs.getString(MiasOrderRowMapper.ORDERS.ADMINISTRATION.toString()));

@@ -33,7 +33,7 @@ public class CdrExamActionRowMapper implements RowMapper<ExamAction> {
 		e.setExamReqId(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.exam_req_id.toString()));
 		e.setExamId(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.exam_id.toString()));
 		e.setActorId(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.actor_id.toString()));
-		e.setActionDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.action_date_time.toString())));
+		e.setActionDateTime(RowMapperUtil.getDateTime(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.action_date_time.toString())));
 		e.setActionTypeId(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.action_type_id.toString()));
 		e.setActionMemo(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.action_memo.toString()));
 		e.setActorName(rs.getString(CdrExamActionRowMapper.openEHR_EHR_ACTION_exam_action.actor_name.toString()));

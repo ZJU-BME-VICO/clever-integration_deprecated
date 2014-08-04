@@ -46,7 +46,7 @@ public class CdrAllergyRowMapper implements RowMapper<Allergy> {
 		a.setAllergySource(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.allergy_source.toString()));
 		a.setMemo(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.memo.toString()));
 		a.setEditor(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.editor.toString()));
-		a.setEditDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.edit_date_time.toString())));
+		a.setEditDateTime(RowMapperUtil.getDateTime(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.edit_date_time.toString())));
 		a.setAllergySubClassCode(RowMapperUtil.getInteger(rs, CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.allergy_sub_class_code.toString()));
 		a.setDrugTradeName(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.drug_trade_name.toString()));
 		a.setDrugRatifyCode(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.drug_rattfy_code.toString()));

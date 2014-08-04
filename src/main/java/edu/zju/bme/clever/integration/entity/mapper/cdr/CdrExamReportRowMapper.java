@@ -50,7 +50,7 @@ public class CdrExamReportRowMapper implements RowMapper<ExamReport> {
 		e.setExamView(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_view.toString()));
 		e.setExamDiag(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_diag.toString()));
 		e.setExamMemo(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_memo.toString()));
-		e.setReportDate(RowMapperUtil.getDateTime(rs.getTimestamp(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_date.toString())));
+		e.setReportDate(RowMapperUtil.getDateTime(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_date.toString())));
 		e.setReporterId(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.reporter_id.toString()));
 		e.setReporterName(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.reporter_name.toString()));
 		e.setVerifierId(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.verifier_id.toString()));

@@ -66,8 +66,7 @@ public class CdrPatientRowMapper implements RowMapper<Patient> {
 		p.setName(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name.toString()));
 		p.setNamePhonetic(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name_phonetic.toString()));
 		p.setGender(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.gender.toString()));
-		p.setDateOfBirth(RowMapperUtil.getDateTime(
-				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.date_of_birth.toString())));
+		p.setDateOfBirth(RowMapperUtil.getDateTime(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.date_of_birth.toString())));
 		p.setBirthPlace(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.birth_place.toString()));
 		p.setNationality(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.nationality.toString()));
 		p.setEthnicGroup(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ethnic_group.toString()));
@@ -89,17 +88,13 @@ public class CdrPatientRowMapper implements RowMapper<Patient> {
 		p.setPhoneNoHome(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_home.toString()));
 		p.setPhoneNoBusiness(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_business.toString()));
 		p.setDeathIndicator(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_indicator.toString()));
-		p.setDeathTime(RowMapperUtil.getDateTime(
-				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_time.toString())));
-		p.setCreatedDate(RowMapperUtil.getDateTime(
-				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_date.toString())));
+		p.setDeathTime(RowMapperUtil.getDateTime(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_time.toString())));
+		p.setCreatedDate(RowMapperUtil.getDateTime(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_date.toString())));
 		p.setCreatedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_by.toString()));
-		p.setLastModifyDate(RowMapperUtil.getDateTime(
-				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modify_date.toString())));
+		p.setLastModifyDate(RowMapperUtil.getDateTime(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modify_date.toString())));
 		p.setLastModifiedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modified_by.toString()));
 		p.setVoidedIndicator(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_indicator.toString()));
-		p.setVoidedDate(RowMapperUtil.getDateTime(
-				rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_date.toString())));
+		p.setVoidedDate(RowMapperUtil.getDateTime(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_date.toString())));
 		p.setVoidedBy(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_by.toString()));
 		p.setRefPatientId(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ref_patient_id.toString()));
 		p.setInpatientNo(rs.getString(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.inpatientno.toString()));

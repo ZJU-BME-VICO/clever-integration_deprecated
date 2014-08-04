@@ -47,7 +47,7 @@ public class CdrLabTestDataRowMapper implements RowMapper<LabTestData> {
 		l.setAbnormalIndicator(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.abnormal_indicator.toString()));
 		l.setNormalReferenceValues(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.normal_reference_values.toString()));
 		l.setInstrumentId(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.instrument_id.toString()));
-		l.setResultDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.result_date_time.toString())));
+		l.setResultDateTime(RowMapperUtil.getDateTime(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.result_date_time.toString())));
 		l.setTestDataId(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.test_data_id.toString()));
 		l.set_uid_value(rs.getString(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data._uid_value.toString())));
 		l.setIdPatient(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idPatient.toString()));

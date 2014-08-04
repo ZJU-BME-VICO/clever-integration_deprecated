@@ -47,7 +47,7 @@ public class CdrExamRequestRowMapper implements RowMapper<ExamRequest> {
 		e.setVisitId(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.visit_id.toString()));
 		e.setOrderId(RowMapperUtil.getInteger(rs, CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.order_id.toString()));
 		e.setPriority(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.priority.toString()));
-		e.setReqDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_date_time.toString())));
+		e.setReqDateTime(RowMapperUtil.getDateTime(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_date_time.toString())));
 		e.setReqDeptName(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_dept_name.toString()));
 		e.setReqDeptId(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_dept_id.toString()));
 		e.setReqDoctorName(rs.getString(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_doctor_name.toString()));

@@ -63,7 +63,7 @@ public class CdrLabTestMasterRowMapper implements RowMapper<LabTestMaster> {
 		l.setExecuteDeptCode(rs.getString(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.execute_dept_code.toString()));
 		l.setExecuteDeptName(rs.getString(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.execute_dept_name.toString()));
 		l.setTestStatus(RowMapperUtil.getInteger(rs, CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_status.toString()));
-		l.setTestTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_time.toString())));
+		l.setTestTime(RowMapperUtil.getDateTime(rs.getString(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_time.toString())));
 		l.setIsRead(RowMapperUtil.getInteger(rs, CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.is_read.toString()));
 		l.setIsNormal(RowMapperUtil.getInteger(rs, CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.is_normal.toString()));
 		l.setSerialNo(RowMapperUtil.getInteger(rs, CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.serial_no.toString()));
