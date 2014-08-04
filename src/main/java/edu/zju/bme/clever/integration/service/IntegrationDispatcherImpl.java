@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasAllergyRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasDiagnosisRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamActionRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamDataRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamItemRowMapper;
@@ -62,6 +64,10 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private ExamActionService examActionService;
     @Resource(name="vitalSignService")
     private VitalSignService vitalSignService;
+    @Resource(name="diagnosisService")
+    private DiagnosisService diagnosisService;
+    @Resource(name="allergyService")
+    private AllergyService allergyService;
 
 	@Override
 	public void dispatch() {
@@ -129,6 +135,14 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.class.getSimpleName()) == 0) {
 				if (this.vitalSignService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasDiagnosisRowMapper.DIAGNOSIS.class.getSimpleName()) == 0) {
+				if (this.diagnosisService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasAllergyRowMapper.ALLERGY_HISTORY.class.getSimpleName()) == 0) {
+				if (this.allergyService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}
