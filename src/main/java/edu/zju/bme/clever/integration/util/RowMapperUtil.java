@@ -57,6 +57,19 @@ public class RowMapperUtil {
 		}
 	}
 
+	public static Float getFloat(ResultSet rs, String columnName) throws SQLException {
+		if (rs == null) {
+			return null;
+		} else {
+			Float f = rs.getFloat(columnName);
+			if (rs.wasNull()) {
+				f = null;
+			}
+			
+			return f;
+		}
+	}
+
 	public static Boolean getBoolean(ResultSet rs, String columnName) throws SQLException {
 		if (rs == null) {
 			return null;

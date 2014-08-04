@@ -19,7 +19,7 @@ public class Order extends Entity {
 	private String orderClass;
 	private String orderText;
 	private String orderCode;
-	private Double dosage;
+	private Float dosage;
 	private String dosageUnits;
 	private String administrationCode;
 	private String administration;
@@ -184,11 +184,11 @@ public class Order extends Entity {
 		this.orderCode = orderCode;
 	}
 
-	public Double getDosage() {
+	public Float getDosage() {
 		return dosage;
 	}
 
-	public void setDosage(Double dosage) {
+	public void setDosage(Float dosage) {
 		this.dosage = dosage;
 	}
 

@@ -32,7 +32,7 @@ public class CdrLabTestActionRowMapper implements RowMapper<LabTestAction> {
 		l.setTestReqId(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.test_req_id.toString()));
 		l.setTestId(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.test_id.toString()));
 		l.setActorId(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.actor_id.toString()));
-		l.setActionDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.action_date_time.toString())));
+		l.setActionDateTime(RowMapperUtil.getDateTime(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.action_date_time.toString())));
 		l.setActionTypeId(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.action_type_id.toString()));
 		l.setActionMemo(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.action_memo.toString()));
 		l.setActorName(rs.getString(CdrLabTestActionRowMapper.openEHR_EHR_ACTION_lab_test_action.actor_name.toString()));

@@ -47,7 +47,7 @@ public class CdrDiagnosisRowMapper implements RowMapper<Diagnosis> {
 		d.setTreatResult(rs.getString(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.treat_result.toString()));
 		d.setOperTreatIndicator(RowMapperUtil.getInteger(rs, CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.oper_treat_indicator.toString()));
 		d.setDoctor(rs.getString(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.doctor.toString()));
-		d.setDiagnosisDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_date_time.toString())));
+		d.setDiagnosisDateTime(RowMapperUtil.getDateTime(rs.getString(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_date_time.toString())));
 		d.set_uid_value(rs.getString(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis._uid_value.toString()));
 		d.setIdPatient(RowMapperUtil.getInteger(rs, CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.idPatient.toString()));
 		d.setIdVisit(RowMapperUtil.getInteger(rs, CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.idVisit.toString()));

@@ -43,8 +43,8 @@ public class CdrExamMasterRowMapper implements RowMapper<ExamMaster> {
 		e.setHisExamId(rs.getString(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.his_exam_id.toString()));
 		e.setExamDeptName(rs.getString(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_dept_name.toString()));
 		e.setExamDeptCode(rs.getString(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_dept_code.toString()));
-		e.setScheduledDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.scheduled_date_time.toString())));
-		e.setExamTime(RowMapperUtil.getDateTime(rs.getTimestamp(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_time.toString())));
+		e.setScheduledDateTime(RowMapperUtil.getDateTime(rs.getString(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.scheduled_date_time.toString())));
+		e.setExamTime(RowMapperUtil.getDateTime(rs.getString(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_time.toString())));
 		e.setExamStatus(RowMapperUtil.getInteger(rs, CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_status.toString()));
 		e.setIsRead(RowMapperUtil.getInteger(rs, CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.is_read.toString()));
 		e.setIsNormal(RowMapperUtil.getInteger(rs, CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.is_normal.toString()));
