@@ -6,6 +6,6 @@ import edu.zju.bme.clever.integration.entity.Order;
 
 public interface MiasOrderDao {
 
-	public List<Order> get(Integer orderId);
+	public List<Order> get(int orderId);
 
 }

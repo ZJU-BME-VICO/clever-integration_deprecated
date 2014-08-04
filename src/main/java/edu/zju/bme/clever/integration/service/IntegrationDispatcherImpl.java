@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.entity.IntegrationQueue;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamActionRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamDataRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamItemRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamMasterRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamReportRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamRequestRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestActionRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestDataRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestMasterRowMapper;
@@ -17,6 +23,7 @@ import edu.zju.bme.clever.integration.entity.mapper.mias.MiasLabTestRequestRowMa
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasPatientRowMapper;
 import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVisitRowMapper;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVitalSignRowMapper;
 
 
 @Service("integrationDispatcher")
@@ -41,6 +48,20 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
     private LabTestDataService labTestDataService;
     @Resource(name="labTestActionService")
     private LabTestActionService labTestActionService;
+    @Resource(name="examRequestService")
+    private ExamRequestService examRequestService;
+    @Resource(name="examMasterService")
+    private ExamMasterService examMasterService;
+    @Resource(name="examItemService")
+    private ExamItemService examItemService;
+    @Resource(name="examDataService")
+    private ExamDataService examDataService;
+    @Resource(name="examReportService")
+    private ExamReportService examReportService;
+    @Resource(name="examActionService")
+    private ExamActionService examActionService;
+    @Resource(name="vitalSignService")
+    private VitalSignService vitalSignService;
 
 	@Override
 	public void dispatch() {
@@ -77,6 +98,37 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				}
 			} else if (iq.get().getTableName().compareTo(MiasLabTestActionRowMapper.LAB_TEST_ACTION.class.getSimpleName()) == 0) {
 				if (this.labTestActionService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamRequestRowMapper.EXAM_REQUEST.class.getSimpleName()) == 0) {
+				if (this.examRequestService.integrate(iq.get().getLogicalKeyValue())) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamMasterRowMapper.EXAM_MASTER.class.getSimpleName()) == 0) {
+//				if (this.examMasterService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+//					iq.get().setStatus(true);
+//				}
+				if (this.examMasterService.integrate(iq.get().getLogicalKeyValue())) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamItemRowMapper.EXAM_ITEM.class.getSimpleName()) == 0) {
+				if (this.examItemService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamDataRowMapper.EXAM_DATA.class.getSimpleName()) == 0) {
+				if (this.examDataService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamReportRowMapper.EXAM_REPORT.class.getSimpleName()) == 0) {
+				if (this.examReportService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasExamActionRowMapper.EXAM_ACTION.class.getSimpleName()) == 0) {
+				if (this.examActionService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
+					iq.get().setStatus(true);
+				}
+			} else if (iq.get().getTableName().compareTo(MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.class.getSimpleName()) == 0) {
+				if (this.vitalSignService.integrate(Integer.parseInt(iq.get().getLogicalKeyValue()))) {
 					iq.get().setStatus(true);
 				}
 			}

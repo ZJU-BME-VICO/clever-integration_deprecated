@@ -13,27 +13,27 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.zju.bme.clever.integration.entity.Order;
-import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
+import edu.zju.bme.clever.integration.entity.VitalSign;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasVitalSignRowMapper;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
 
-@Service("miasOrderDao")
+@Service("miasVitalSignDao")
 @Transactional
-public class MiasOrderDaoImpl implements MiasOrderDao {
+public class MiasVitalSignDaoImpl implements MiasVitalSignDao {
 
     @Resource(name="jdbcTemplate")
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<Order> get(int orderId) {
-		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :orderId";
+	public List<VitalSign> get(int recordId) {
+		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :recordId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getMiasDatabaseTableName(MiasOrderRowMapper.ORDERS.class.getSimpleName()),
-				MiasOrderRowMapper.ORDERS.ORDER_ID);	
+				DatabaseUtil.getMiasDatabaseTableName(MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.class.getSimpleName()),
+				MiasVitalSignRowMapper.VITAL_SIGNS_RECORD.RECORD_ID);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
-		paramters.put("orderId", orderId);
+		paramters.put("recordId", recordId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
-		return jt.query(sql, source, new MiasOrderRowMapper());
+		return jt.query(sql, source, new MiasVitalSignRowMapper());
 	}
 	
 }

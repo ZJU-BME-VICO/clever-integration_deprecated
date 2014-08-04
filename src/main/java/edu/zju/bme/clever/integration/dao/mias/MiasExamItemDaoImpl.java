@@ -13,27 +13,27 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.zju.bme.clever.integration.entity.Order;
-import edu.zju.bme.clever.integration.entity.mapper.mias.MiasOrderRowMapper;
+import edu.zju.bme.clever.integration.entity.ExamItem;
+import edu.zju.bme.clever.integration.entity.mapper.mias.MiasExamItemRowMapper;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
 
-@Service("miasOrderDao")
+@Service("miasExamItemDao")
 @Transactional
-public class MiasOrderDaoImpl implements MiasOrderDao {
+public class MiasExamItemDaoImpl implements MiasExamItemDao {
 
     @Resource(name="jdbcTemplate")
     private NamedParameterJdbcTemplate jt;
 
 	@Override
-	public List<Order> get(int orderId) {
-		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :orderId";
+	public List<ExamItem> get(int serialNo) {
+		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getMiasDatabaseTableName(MiasOrderRowMapper.ORDERS.class.getSimpleName()),
-				MiasOrderRowMapper.ORDERS.ORDER_ID);	
+				DatabaseUtil.getMiasDatabaseTableName(MiasExamItemRowMapper.EXAM_ITEM.class.getSimpleName()),
+				MiasExamItemRowMapper.EXAM_ITEM.SERIAL_NO);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
-		paramters.put("orderId", orderId);
+		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
-		return jt.query(sql, source, new MiasOrderRowMapper());
+		return jt.query(sql, source, new MiasExamItemRowMapper());
 	}
 	
 }

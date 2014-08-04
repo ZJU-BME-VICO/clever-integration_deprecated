@@ -6,9 +6,9 @@ import edu.zju.bme.clever.integration.entity.Order;
 
 public interface CdrOrderDao {
 
-	public List<Order> get(Integer orderId);
+	public List<Order> get(int orderId);
 	
-	public int getCount(Integer orderId);
+	public int getCount(int orderId);
 	
 	public int save(Order o);
 
