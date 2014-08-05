@@ -30,6 +30,7 @@ public class CdrAllergyRowMapper implements RowMapper<Allergy> {
 		_uid_value,
 		idPatient,
 		idVisit,
+		idOrder,
 	}
 
 	@Override
@@ -55,6 +56,7 @@ public class CdrAllergyRowMapper implements RowMapper<Allergy> {
 		a.set_uid_value(rs.getString(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy._uid_value.toString()));
 		a.setIdPatient(RowMapperUtil.getInteger(rs, CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idPatient.toString()));
 		a.setIdVisit(RowMapperUtil.getInteger(rs, CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idVisit.toString()));
+		a.setIdOrder(RowMapperUtil.getInteger(rs, CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idOrder.toString()));
 		return a;
 	}
 

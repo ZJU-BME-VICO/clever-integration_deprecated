@@ -57,6 +57,8 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 
 	@Override
 	public int save(ExamItem e) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
 		if (this.getCount(e.getSerialNo()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":exam_req_id, "
@@ -70,10 +72,8 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 					+ ":_uid_value, "
 					+ ":idExamRequest, "
 					+ ":idExamMaster)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :exam_req_id, "
@@ -86,7 +86,7 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 					+ "{8} = :_uid_value, "
 					+ "{9} = :idExamRequest, "
 					+ "{10} = :idExamMaster WHERE {11} = :serial_no";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()),
 					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_req_id.toString(),
 					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_id.toString(),
@@ -99,9 +99,8 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.idExamRequest.toString(),
 					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.idExamMaster.toString(),
 					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.serial_no.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);			
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(ExamItem e) {

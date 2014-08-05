@@ -58,6 +58,8 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 
 	@Override
 	public int save(Visit v) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
 		if (this.getCount(v.getVisitId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":mpiml_serial_no, "
@@ -74,10 +76,8 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					+ ":serial_no, "
 					+ ":_uid_value, "
 					+ ":idPatient)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()));	
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :mpiml_serial_no, "
@@ -93,7 +93,7 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					+ "{11} = :serial_no, "
 					+ "{12} = :_uid_value, "
 					+ "{13} = :idPatient WHERE {14} = :visit_id";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.mpiml_serial_no.toString(),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_type.toString(),
@@ -109,9 +109,8 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit._uid_value.toString(),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.idPatient.toString(),
 					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
-			return jt.update(sql, source);			
 		}
+		return jt.update(sql, source);		
 	}
 	
 	private Map<String, Object> putParameters(Visit v) {

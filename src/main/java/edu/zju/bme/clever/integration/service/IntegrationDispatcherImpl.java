@@ -94,7 +94,7 @@ public class IntegrationDispatcherImpl implements IntegrationDispatcher {
 				if (this.labTestRequestService.integrate(iq.get().getLogicalKeyValue())) {
 					iq.get().setStatus(true);
 				}
-			} else if (iq.get().getTableName().compareTo(MiasLabTestMasterRowMapper.LAB_TEST_MASTER.class.toString()) == 0) {
+			} else if (iq.get().getTableName().compareTo(MiasLabTestMasterRowMapper.LAB_TEST_MASTER.class.getSimpleName()) == 0) {
 				if (this.labTestMasterService.integrate(iq.get().getLogicalKeyValue())) {
 					iq.get().setStatus(true);
 				}

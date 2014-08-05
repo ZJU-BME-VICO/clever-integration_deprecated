@@ -47,9 +47,11 @@ public class LabTestRequestServiceImpl implements LabTestRequestService {
 				l.setIdVisit(v.get_hibernarmId());
 			}
 			
-			Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
-			if (o != null) {
-				l.setIdOrder(o.get_hibernarmId());
+			if (l.getOrderId() != null) {
+				Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
+				if (o != null) {
+					l.setIdOrder(o.get_hibernarmId());
+				}				
 			}
 
 			if (this.cdrLabTestRequestDao.save(l) == 1) {

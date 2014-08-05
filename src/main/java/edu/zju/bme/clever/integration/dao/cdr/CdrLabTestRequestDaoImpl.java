@@ -58,6 +58,8 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 
 	@Override
 	public int save(LabTestRequest l) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
 		if (this.getCount(l.getTestReqId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":test_req_id, "
@@ -88,10 +90,8 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 					+ ":idPatient, "
 					+ ":idVisit, "
 					+ ":idOrder)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -121,7 +121,7 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 					+ "{25} = :idPatient, "
 					+ "{26} = :idVisit, "
 					+ "{27} = :idOrder WHERE {28} = :test_req_id";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()),
 					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.patient_id.toString(),
 					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.visit_id.toString(),
@@ -150,10 +150,9 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idPatient.toString(),
 					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idVisit.toString(),
 					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idOrder.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
-			return jt.update(sql, source);			
+					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id.toString());		
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(LabTestRequest l) {

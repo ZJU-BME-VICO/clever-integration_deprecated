@@ -23,6 +23,7 @@ public class Allergy extends Entity {
 	private String _uid_value;
 	private Integer idPatient;
 	private Integer idVisit;
+	private Integer idOrder;
 	
 	public Allergy() {
 		super();
@@ -178,6 +179,14 @@ public class Allergy extends Entity {
 
 	public void setIdVisit(Integer idVisit) {
 		this.idVisit = idVisit;
+	}
+
+	public Integer getIdOrder() {
+		return idOrder;
+	}
+
+	public void setIdOrder(Integer idOrder) {
+		this.idOrder = idOrder;
 	}
 	
 }
