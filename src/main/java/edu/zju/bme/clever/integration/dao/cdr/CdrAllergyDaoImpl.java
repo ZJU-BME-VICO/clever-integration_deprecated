@@ -79,7 +79,8 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					+ ":production_batch_no, "
 					+ ":_uid_value, "
 					+ ":idPatient, "
-					+ ":idVisit)";		
+					+ ":idVisit, "
+					+ ":idOrder)";		
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.class.getSimpleName()));	
 		} else {
@@ -100,7 +101,8 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					+ "{14} = :production_batch_no, "
 					+ "{15} = :_uid_value, "
 					+ "{16} = :idPatient, "
-					+ "{17} = :idVisit WHERE {18} = :allergy_id";		
+					+ "{17} = :idVisit, "
+					+ "{18} = :idOrder WHERE {19} = :allergy_id";		
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.class.getSimpleName()),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.patient_id.toString(),
@@ -120,6 +122,7 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy._uid_value.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idPatient.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idVisit.toString(),
+					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idOrder.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.allergy_id.toString());
 		}
 		return jt.update(sql, source);			
@@ -145,6 +148,7 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 		parameters.put("_uid_value", a.get_uid_value());
 		parameters.put("idPatient", a.getIdPatient());
 		parameters.put("idVisit", a.getIdVisit());
+		parameters.put("idOrder", a.getIdOrder());
 		return parameters;
 	}
 	
