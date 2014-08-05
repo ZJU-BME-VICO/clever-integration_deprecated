@@ -57,6 +57,8 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 
 	@Override
 	public int save(ExamData e) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
 		if (this.getCount(e.getDataNo()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":exam_id, "
@@ -71,10 +73,8 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					+ ":second_path, "
 					+ ":_uid_value, "
 					+ ":idExamMaster)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :exam_id, "
@@ -88,10 +88,9 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					+ "{9} = :second_path, "
 					+ "{10} = :_uid_value, "
 					+ "{11} = :idExamMaster WHERE {12} = :data_no";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.class.getSimpleName()),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.exam_id.toString(),
-					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.data_no.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.data_type.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.series_no.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.image_no.toString(),
@@ -101,10 +100,10 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_media_name.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_path.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data._uid_value.toString(),
-					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.idExamMaster.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);			
+					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.idExamMaster.toString(),
+					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.data_no.toString());
 		}
+		return jt.update(sql, source);		
 	}
 	
 	private Map<String, Object> putParameters(ExamData e) {

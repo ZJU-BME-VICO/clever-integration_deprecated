@@ -58,6 +58,8 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 
 	@Override
 	public int save(Allergy a) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(a));
 		if (this.getCount(a.getAllergyId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":allergy_id, "
@@ -78,10 +80,8 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					+ ":_uid_value, "
 					+ ":idPatient, "
 					+ ":idVisit)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.class.getSimpleName()));	
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(a));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -101,9 +101,8 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					+ "{15} = :_uid_value, "
 					+ "{16} = :idPatient, "
 					+ "{17} = :idVisit WHERE {18} = :allergy_id";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.class.getSimpleName()),
-					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.allergy_id.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.patient_id.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.visit_id.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.order_id.toString(),
@@ -120,10 +119,10 @@ public class CdrAllergyDaoImpl implements CdrAllergyDao {
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.production_batch_no.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy._uid_value.toString(),
 					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idPatient.toString(),
-					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idVisit.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(a));
-			return jt.update(sql, source);			
+					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.idVisit.toString(),
+					CdrAllergyRowMapper.openEHR_EHR_OBSERVATION_allergy.allergy_id.toString());
 		}
+		return jt.update(sql, source);			
 	}
 	
 	private Map<String, Object> putParameters(Allergy a) {

@@ -47,9 +47,11 @@ public class ExamRequestServiceImpl implements ExamRequestService {
 				e.setIdVisit(v.get_hibernarmId());
 			}
 			
-			Order o = this.orderService.cachedOrIntegrate(e.getOrderId());
-			if (o != null) {
-				e.setIdOrder(o.get_hibernarmId());
+			if (e.getOrderId() != null) {
+				Order o = this.orderService.cachedOrIntegrate(e.getOrderId());
+				if (o != null) {
+					e.setIdOrder(o.get_hibernarmId());
+				}				
 			}
 
 			if (this.cdrExamRequestDao.save(e) == 1) {

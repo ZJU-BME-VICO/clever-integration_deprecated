@@ -31,7 +31,7 @@ public class MiasExamActionRowMapper implements RowMapper<ExamAction> {
 		e.setActorId(rs.getString(MiasExamActionRowMapper.EXAM_ACTION.ACTOR_ID.toString()));
 		e.setActionDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(MiasExamActionRowMapper.EXAM_ACTION.ACTION_DATE_TIME.toString())));
 		e.setActionTypeId(rs.getString(MiasExamActionRowMapper.EXAM_ACTION.ACTION_TYPE_ID.toString()));
-		e.setActionMemo(rs.getString(MiasExamActionRowMapper.EXAM_ACTION.ACTION_TYPE_ID.toString()));
+		e.setActionMemo(rs.getString(MiasExamActionRowMapper.EXAM_ACTION.ACTION_MEMO.toString()));
 		e.setActorName(rs.getString(MiasExamActionRowMapper.EXAM_ACTION.ACTOR_NAME.toString()));
 		return e;
 	}

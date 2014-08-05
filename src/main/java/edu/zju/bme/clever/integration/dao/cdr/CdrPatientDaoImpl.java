@@ -76,6 +76,8 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 
 	@Override
 	public int save(Patient p) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(p));
 		if (this.getCount(p.getPatientId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":patient_id, "
@@ -122,10 +124,8 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 					+ ":patient_healthcare_property_name, "
 					+ ":serial_no, "
 					+ ":_uid_value)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()));	
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(p));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :_uid_value, "
@@ -171,7 +171,7 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 					+ "{41} = :patient_healthcare_property_code, "
 					+ "{42} = :patient_healthcare_property_name, "
 					+ "{43} = :serial_no WHERE {44} = :patient_id";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
 					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient._uid_value.toString(),
 					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name.toString(),
@@ -216,10 +216,9 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_code.toString(),
 					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_name.toString(),
 					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(p));
-			return jt.update(sql, source);			
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id.toString());	
 		}
+		return jt.update(sql, source);		
 	}
 	
 	private Map<String, Object> putParameters(Patient p) {

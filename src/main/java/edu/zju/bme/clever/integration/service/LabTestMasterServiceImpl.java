@@ -50,9 +50,11 @@ public class LabTestMasterServiceImpl implements LabTestMasterService {
 				l.setIdVisit(v.get_hibernarmId());
 			}
 			
-			Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
-			if (o != null) {
-				l.setIdOrder(o.get_hibernarmId());
+			if (l.getOrderId() != null) {
+				Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
+				if (o != null) {
+					l.setIdOrder(o.get_hibernarmId());
+				}				
 			}
 			
 			LabTestRequest labTestRequest = this.labTestRequestService.cachedOrIntegrate(l.getTestReqId());

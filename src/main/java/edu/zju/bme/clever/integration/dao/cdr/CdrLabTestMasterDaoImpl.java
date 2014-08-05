@@ -58,6 +58,8 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 
 	@Override
 	public int save(LabTestMaster l) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
 		if (this.getCount(l.getTestId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":test_id, "
@@ -87,10 +89,8 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					+ ":idVisit, "
 					+ ":idLabTestRequest, "
 					+ ":idOrder)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -119,7 +119,7 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					+ "{24} = :idVisit, "
 					+ "{25} = :idLabTestRequest, "
 					+ "{26} = :idOrder WHERE {27} = :test_id";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.patient_id.toString(),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.visit_id.toString(),
@@ -148,9 +148,8 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idLabTestRequest.toString(),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idOrder.toString(),
 					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(l));
-			return jt.update(sql, source);			
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(LabTestMaster l) {

@@ -17,6 +17,7 @@ import edu.zju.bme.clever.integration.entity.ExamReport;
 import edu.zju.bme.clever.integration.entity.mapper.cdr.CdrExamReportRowMapper;
 import edu.zju.bme.clever.integration.util.CdrCache;
 import edu.zju.bme.clever.integration.util.DatabaseUtil;
+import edu.zju.bme.clever.integration.util.RowMapperUtil;
 
 @Service("cdrExamReportDao")
 @Transactional
@@ -57,6 +58,8 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 
 	@Override
 	public int save(ExamReport e) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
 		if (this.getCount(e.getReportNo()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":exam_id, "
@@ -80,10 +83,8 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					+ ":is_abnormal, "
 					+ ":_uid_value, "
 					+ ":idExamMaster)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :exam_id, "
@@ -106,10 +107,9 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					+ "{18} = :is_abnormal, "
 					+ "{19} = :_uid_value, "
 					+ "{20} = :idExamMaster WHERE {21} = :report_no";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.class.getSimpleName()),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_id.toString(),
-					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_no.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.storage_mode.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_url.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_desc.toString(),
@@ -128,10 +128,10 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.second_path.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.is_abnormal.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report._uid_value.toString(),
-					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.idExamMaster.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);			
+					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.idExamMaster.toString(),
+					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_no.toString());	
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(ExamReport e) {
@@ -144,7 +144,7 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 		parameters.put("exam_view", e.getExamView());
 		parameters.put("exam_diag", e.getExamDiag());
 		parameters.put("exam_memo", e.getExamMemo());
-		parameters.put("report_date", e.getReportDate());
+		parameters.put("report_date", RowMapperUtil.getDateTimeString(e.getReportDate()));
 		parameters.put("reporter_id", e.getReporterId());
 		parameters.put("reporter_name", e.getReporterName());
 		parameters.put("verifier_id", e.getVerifierId());

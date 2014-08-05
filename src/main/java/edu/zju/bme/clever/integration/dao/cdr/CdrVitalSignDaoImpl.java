@@ -58,6 +58,8 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
 
 	@Override
 	public int save(VitalSign v) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
 		if (this.getCount(v.getRecordId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":record_id, "
@@ -73,10 +75,8 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
 					+ ":_uid_value, "
 					+ ":idPatient, "
 					+ ":idVisit)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.class.getSimpleName()));	
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -91,9 +91,8 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
 					+ "{10} = :_uid_value, "
 					+ "{11} = :idPatient, "
 					+ "{12} = :idVisit WHERE {13} = :record_id";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.class.getSimpleName()),
-					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.record_id.toString(),
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.patient_id.toString(),
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.visit_id.toString(),
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.time_point.toString(),
@@ -105,10 +104,10 @@ public class CdrVitalSignDaoImpl implements CdrVitalSignDao {
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.flag.toString(),
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record._uid_value.toString(),
 					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.idPatient.toString(),
-					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.idVisit.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(v));
-			return jt.update(sql, source);			
+					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.idVisit.toString(),
+					CdrVitalSignRowMapper.openEHR_EHR_OBSERVATION_vital_signs_record.record_id.toString());
 		}
+		return jt.update(sql, source);	
 	}
 	
 	private Map<String, Object> putParameters(VitalSign v) {

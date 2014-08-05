@@ -58,6 +58,8 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 
 	@Override
 	public int save(ExamRequest e) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
 		if (this.getCount(e.getExamReqId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":exam_req_id, "
@@ -83,10 +85,8 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 					+ ":idPatient, "
 					+ ":idVisit, "
 					+ ":idOrder)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()));
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -111,7 +111,7 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 					+ "{20} = :idPatient, "
 					+ "{21} = :idVisit, "
 					+ "{22} = :idOrder WHERE {23} = :exam_req_id";	
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()),
 					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.patient_id.toString(),
 					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.visit_id.toString(),
@@ -136,9 +136,8 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.idVisit.toString(),
 					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.idOrder.toString(),
 					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.exam_req_id.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(e));
-			return jt.update(sql, source);			
 		}
+		return jt.update(sql, source);		
 	}
 	
 	private Map<String, Object> putParameters(ExamRequest e) {

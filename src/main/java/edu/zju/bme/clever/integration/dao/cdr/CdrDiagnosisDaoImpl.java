@@ -58,6 +58,8 @@ public class CdrDiagnosisDaoImpl implements CdrDiagnosisDao {
 
 	@Override
 	public int save(Diagnosis d) {
+		String sql = "";
+		SqlParameterSource source = new MapSqlParameterSource(this.putParameters(d));
 		if (this.getCount(d.getDiagnosisId()) <= 0) {
 			String sqlFormat = "INSERT INTO {0} VALUES("
 					+ ":diagnosis_id, "
@@ -76,10 +78,8 @@ public class CdrDiagnosisDaoImpl implements CdrDiagnosisDao {
 					+ ":_uid_value, "
 					+ ":idPatient, "
 					+ ":idVisit)";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.class.getSimpleName()));	
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(d));
-			return jt.update(sql, source);
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -97,9 +97,8 @@ public class CdrDiagnosisDaoImpl implements CdrDiagnosisDao {
 					+ "{13} = :_uid_value, "
 					+ "{14} = :idPatient, "
 					+ "{15} = :idVisit WHERE {16} = :diagnosis_id";		
-			String sql = MessageFormat.format(sqlFormat, 				
+			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.class.getSimpleName()),
-					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_id.toString(),
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.patient_id.toString(),
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.visit_id.toString(),
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_class_id.toString(),
@@ -114,10 +113,10 @@ public class CdrDiagnosisDaoImpl implements CdrDiagnosisDao {
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_date_time.toString(),
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis._uid_value.toString(),
 					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.idPatient.toString(),
-					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.idVisit.toString());
-			SqlParameterSource source = new MapSqlParameterSource(this.putParameters(d));
-			return jt.update(sql, source);			
+					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.idVisit.toString(),
+					CdrDiagnosisRowMapper.openEHR_EHR_EVALUATION_diagnosis.diagnosis_id.toString());
 		}
+		return jt.update(sql, source);		
 	}
 	
 	private Map<String, Object> putParameters(Diagnosis d) {

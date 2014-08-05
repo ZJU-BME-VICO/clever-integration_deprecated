@@ -38,8 +38,8 @@ public class MiasExamMasterRowMapper implements RowMapper<ExamMaster> {
 		e.setHisExamId(rs.getString(MiasExamMasterRowMapper.EXAM_MASTER.HIS_EXAM_ID.toString()));
 		e.setExamDeptName(rs.getString(MiasExamMasterRowMapper.EXAM_MASTER.EXAM_DEPT_NAME.toString()));
 		e.setExamDeptCode(rs.getString(MiasExamMasterRowMapper.EXAM_MASTER.EXAM_DEPT_CODE.toString()));
-		e.setScheduledDateTime(RowMapperUtil.getDateTime(MiasExamMasterRowMapper.EXAM_MASTER.SCHEDULED_DATE_TIME.toString()));
-		e.setExamTime(RowMapperUtil.getDateTime(MiasExamMasterRowMapper.EXAM_MASTER.EXAM_TIME.toString()));
+		e.setScheduledDateTime(RowMapperUtil.getDateTime(rs.getTimestamp(MiasExamMasterRowMapper.EXAM_MASTER.SCHEDULED_DATE_TIME.toString())));
+		e.setExamTime(RowMapperUtil.getDateTime(rs.getTimestamp(MiasExamMasterRowMapper.EXAM_MASTER.EXAM_TIME.toString())));
 		e.setExamStatus(RowMapperUtil.getInteger(rs, MiasExamMasterRowMapper.EXAM_MASTER.EXAM_STATUS.toString()));
 		e.setIsRead(RowMapperUtil.getInteger(rs, MiasExamMasterRowMapper.EXAM_MASTER.IS_READ.toString()));
 		e.setIsNormal(RowMapperUtil.getInteger(rs, MiasExamMasterRowMapper.EXAM_MASTER.IS_NORMAL.toString()));
