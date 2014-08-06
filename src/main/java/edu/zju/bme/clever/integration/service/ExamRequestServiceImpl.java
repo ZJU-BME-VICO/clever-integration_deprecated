@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrExamRequestDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasExamRequestDao;
 import edu.zju.bme.clever.integration.entity.ExamRequest;
-import edu.zju.bme.clever.integration.entity.Order;
-import edu.zju.bme.clever.integration.entity.Patient;
-import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("examRequestService")
@@ -27,8 +24,6 @@ public class ExamRequestServiceImpl implements ExamRequestService {
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
-    @Resource(name="orderService")
-    private OrderService orderService;
 
 	@Override
 	public Boolean integrate(String examReqId) {
@@ -37,22 +32,9 @@ public class ExamRequestServiceImpl implements ExamRequestService {
 		if (examRequests.size() == 1) {
 			ExamRequest e = examRequests.get(0);
 			
-			Patient p = this.patientService.cachedOrIntegrate(e.getPatientId());
-			if (p != null) {
-				e.setIdPatient(p.get_hibernarmId());
-			}
+			this.patientService.cachedOrIntegrate(e.getPatientId());
 			
-			Visit v = this.visitService.cachedOrIntegrate(e.getVisitId());
-			if (v != null) {
-				e.setIdVisit(v.get_hibernarmId());
-			}
-			
-			if (e.getOrderId() != null) {
-				Order o = this.orderService.cachedOrIntegrate(e.getOrderId());
-				if (o != null) {
-					e.setIdOrder(o.get_hibernarmId());
-				}				
-			}
+			this.visitService.cachedOrIntegrate(e.getVisitId());
 
 			if (this.cdrExamRequestDao.save(e) == 1) {
 				success = true;

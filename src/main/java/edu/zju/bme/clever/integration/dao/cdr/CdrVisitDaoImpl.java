@@ -30,8 +30,8 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 	public List<Visit> get(String visitId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :visitId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()),
-				CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.class.getSimpleName()),
+				CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.visit_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("visitId", visitId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -48,8 +48,8 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 	public int getCount(String visitId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :visitId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()),
-				CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_id);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.class.getSimpleName()),
+				CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.visit_id);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("visitId", visitId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -74,10 +74,9 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					+ ":visit_time, "
 					+ ":status, "
 					+ ":serial_no, "
-					+ ":_uid_value, "
-					+ ":idPatient)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()));	
+					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.class.getSimpleName()));	
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :mpiml_serial_no, "
@@ -91,24 +90,22 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 					+ "{9} = :visit_time, "
 					+ "{10} = :status, "
 					+ "{11} = :serial_no, "
-					+ "{12} = :_uid_value, "
-					+ "{13} = :idPatient WHERE {14} = :visit_id";		
+					+ "{12} = :_uid_value WHERE {13} = :visit_id";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.class.getSimpleName()),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.mpiml_serial_no.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_type.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.his_visit_id.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.his_visit_sub_id.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.department_code.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.department_name.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.ward_code.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.ward_name.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_time.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.status.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.serial_no.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit._uid_value.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.idPatient.toString(),
-					CdrVisitRowMapper.openEHR_EHR_ADMIN_ENTRY_visit.visit_id.toString());
+					DatabaseUtil.getCdrDatabaseTableName(CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.class.getSimpleName()),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.mpiml_serial_no.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.visit_type.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.his_visit_id.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.his_visit_sub_id.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.department_code.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.department_name.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.ward_code.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.ward_name.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.visit_time.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.status.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.serial_no.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit._uid_value.toString(),
+					CdrVisitRowMapper.openEHR_EHR_OBSERVATION_patient_visit.visit_id.toString());
 		}
 		return jt.update(sql, source);		
 	}
@@ -128,7 +125,6 @@ public class CdrVisitDaoImpl implements CdrVisitDao {
 		parameters.put("status", v.getStatus());
 		parameters.put("serial_no", v.getSerialNo());
 		parameters.put("_uid_value", v.get_uid_value());
-		parameters.put("idPatient", v.getIdPatient());
 		return parameters;
 	}
 	

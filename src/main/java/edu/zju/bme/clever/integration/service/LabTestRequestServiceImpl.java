@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrLabTestRequestDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasLabTestRequestDao;
 import edu.zju.bme.clever.integration.entity.LabTestRequest;
-import edu.zju.bme.clever.integration.entity.Order;
-import edu.zju.bme.clever.integration.entity.Patient;
-import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("labTestRequestService")
@@ -27,8 +24,6 @@ public class LabTestRequestServiceImpl implements LabTestRequestService {
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
-    @Resource(name="orderService")
-    private OrderService orderService;
 
 	@Override
 	public Boolean integrate(String testReqId) {
@@ -37,22 +32,9 @@ public class LabTestRequestServiceImpl implements LabTestRequestService {
 		if (labTestRequests.size() == 1) {
 			LabTestRequest l = labTestRequests.get(0);
 			
-			Patient p = this.patientService.cachedOrIntegrate(l.getPatientId());
-			if (p != null) {
-				l.setIdPatient(p.get_hibernarmId());
-			}
+			this.patientService.cachedOrIntegrate(l.getPatientId());
 			
-			Visit v = this.visitService.cachedOrIntegrate(l.getVisitId());
-			if (v != null) {
-				l.setIdVisit(v.get_hibernarmId());
-			}
-			
-			if (l.getOrderId() != null) {
-				Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
-				if (o != null) {
-					l.setIdOrder(o.get_hibernarmId());
-				}				
-			}
+			this.visitService.cachedOrIntegrate(l.getVisitId());
 
 			if (this.cdrLabTestRequestDao.save(l) == 1) {
 				success = true;

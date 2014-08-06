@@ -13,8 +13,6 @@ public class ExamItem extends Entity {
 	private String examItemCode;
 	private Integer _hibernarmId;
 	private String _uid_value;
-	private Integer idExamRequest;
-	private Integer idExamMaster;
 	
 	public ExamItem() {
 		super();
@@ -98,22 +96,6 @@ public class ExamItem extends Entity {
 
 	public void set_uid_value(String _uid_value) {
 		this._uid_value = _uid_value;
-	}
-
-	public Integer getIdExamRequest() {
-		return idExamRequest;
-	}
-
-	public void setIdExamRequest(Integer idExamRequest) {
-		this.idExamRequest = idExamRequest;
-	}
-
-	public Integer getIdExamMaster() {
-		return idExamMaster;
-	}
-
-	public void setIdExamMaster(Integer idExamMaster) {
-		this.idExamMaster = idExamMaster;
 	}
 	
 }

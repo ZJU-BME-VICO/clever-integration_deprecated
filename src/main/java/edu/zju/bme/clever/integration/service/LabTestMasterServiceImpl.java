@@ -10,10 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrLabTestMasterDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasLabTestMasterDao;
 import edu.zju.bme.clever.integration.entity.LabTestMaster;
-import edu.zju.bme.clever.integration.entity.LabTestRequest;
-import edu.zju.bme.clever.integration.entity.Order;
-import edu.zju.bme.clever.integration.entity.Patient;
-import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("labTestMasterService")
@@ -28,8 +24,6 @@ public class LabTestMasterServiceImpl implements LabTestMasterService {
     private PatientService patientService;
     @Resource(name="visitService")
     private VisitService visitService;
-    @Resource(name="orderService")
-    private OrderService orderService;
     @Resource(name="labTestRequestService")
     private LabTestRequestService labTestRequestService;
 
@@ -40,27 +34,11 @@ public class LabTestMasterServiceImpl implements LabTestMasterService {
 		if (labTestMasters.size() == 1) {
 			LabTestMaster l = labTestMasters.get(0);
 			
-			Patient p = this.patientService.cachedOrIntegrate(l.getPatientId());
-			if (p != null) {
-				l.setIdPatient(p.get_hibernarmId());
-			}
+			this.patientService.cachedOrIntegrate(l.getPatientId());
 			
-			Visit v = this.visitService.cachedOrIntegrate(l.getVisitId());
-			if (v != null) {
-				l.setIdVisit(v.get_hibernarmId());
-			}
+			this.visitService.cachedOrIntegrate(l.getVisitId());
 			
-			if (l.getOrderId() != null) {
-				Order o = this.orderService.cachedOrIntegrate(l.getOrderId());
-				if (o != null) {
-					l.setIdOrder(o.get_hibernarmId());
-				}				
-			}
-			
-			LabTestRequest labTestRequest = this.labTestRequestService.cachedOrIntegrate(l.getTestReqId());
-			if (labTestRequest != null) {
-				l.setIdLabTestRequest(labTestRequest.get_hibernarmId());
-			}
+			this.labTestRequestService.cachedOrIntegrate(l.getTestReqId());
 
 			if (this.cdrLabTestMasterDao.save(l) == 1) {
 				success = true;

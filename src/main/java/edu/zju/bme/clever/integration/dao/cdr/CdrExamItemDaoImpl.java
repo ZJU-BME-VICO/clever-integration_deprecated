@@ -29,8 +29,8 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 	public List<ExamItem> get(int serialNo) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()),
-				CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.serial_no);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.class.getSimpleName()),
+				CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.serial_no);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -47,8 +47,8 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 	public int getCount(int serialNo) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :serialNo";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()),
-				CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.serial_no);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.class.getSimpleName()),
+				CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.serial_no);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -69,11 +69,9 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 					+ ":exam_item_name, "
 					+ ":exam_item_code, "
 					+ ":serial_no, "
-					+ ":_uid_value, "
-					+ ":idExamRequest, "
-					+ ":idExamMaster)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()));
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.class.getSimpleName()));
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :exam_req_id, "
@@ -83,22 +81,18 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 					+ "{5} = :exam_sub_class, "
 					+ "{6} = :exam_item_name, "
 					+ "{7} = :exam_item_code, "
-					+ "{8} = :_uid_value, "
-					+ "{9} = :idExamRequest, "
-					+ "{10} = :idExamMaster WHERE {11} = :serial_no";	
+					+ "{8} = :_uid_value WHERE {9} = :serial_no";	
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.class.getSimpleName()),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_req_id.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_id.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_item_no.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_class.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_sub_class.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_item_name.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.exam_item_code.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item._uid_value.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.idExamRequest.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.idExamMaster.toString(),
-					CdrExamItemRowMapper.openEHR_EHR_INSTRUCTION_exam_item.serial_no.toString());
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.class.getSimpleName()),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_req_id.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_id.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_item_no.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_class.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_sub_class.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_item_name.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.exam_item_code.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item._uid_value.toString(),
+					CdrExamItemRowMapper.openEHR_EHR_OBSERVATION_exam_item.serial_no.toString());
 		}
 		return jt.update(sql, source);	
 	}
@@ -114,8 +108,6 @@ public class CdrExamItemDaoImpl implements CdrExamItemDao {
 		parameters.put("exam_item_code", e.getExamItemCode());
 		parameters.put("serial_no", e.getSerialNo());
 		parameters.put("_uid_value", e.get_uid_value());
-		parameters.put("idExamRequest", e.getIdExamRequest());
-		parameters.put("idExamMaster", e.getIdExamMaster());
 		return parameters;
 	}
 	

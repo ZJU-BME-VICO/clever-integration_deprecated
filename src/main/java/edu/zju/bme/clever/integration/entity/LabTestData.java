@@ -19,9 +19,6 @@ public class LabTestData extends Entity {
 	private Integer testDataId;
 	private Integer _hibernarmId;
 	private String _uid_value;
-	private Integer idPatient;
-	private Integer idVisit;
-	private Integer idLabTestMaster;
 	
 	public LabTestData() {
 		super();
@@ -145,30 +142,6 @@ public class LabTestData extends Entity {
 
 	public void set_uid_value(String _uid_value) {
 		this._uid_value = _uid_value;
-	}
-
-	public Integer getIdPatient() {
-		return idPatient;
-	}
-
-	public void setIdPatient(Integer idPatient) {
-		this.idPatient = idPatient;
-	}
-
-	public Integer getIdVisit() {
-		return idVisit;
-	}
-
-	public void setIdVisit(Integer idVisit) {
-		this.idVisit = idVisit;
-	}
-
-	public Integer getIdLabTestMaster() {
-		return idLabTestMaster;
-	}
-
-	public void setIdLabTestMaster(Integer idLabTestMaster) {
-		this.idLabTestMaster = idLabTestMaster;
 	}
 	
 }

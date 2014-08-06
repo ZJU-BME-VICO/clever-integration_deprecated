@@ -48,8 +48,8 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 	public List<ExamMaster> get(String examId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :examId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.class.getSimpleName()),
+				CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("examId", examId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -78,8 +78,8 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 	public int getCount(String examId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :examId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-				CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id);
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.class.getSimpleName()),
+				CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_id);
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("examId", examId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -105,12 +105,9 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 					+ ":is_read, "
 					+ ":is_normal, "
 					+ ":serial_no, "
-					+ ":_uid_value, "
-					+ ":idPatient, "
-					+ ":idVisit, "
-					+ ":idExamRequest)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()));
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.class.getSimpleName()));
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :exam_id, "
@@ -125,29 +122,23 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 					+ "{10} = :exam_status, "
 					+ "{11} = :is_read, "
 					+ "{12} = :is_normal, "
-					+ "{13} = :_uid_value, "
-					+ "{14} = :idPatient, "
-					+ "{15} = :idVisit, "
-					+ "{16} = :idExamRequest WHERE {17} = :serial_no";	
+					+ "{13} = :_uid_value WHERE {14} = :serial_no";	
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.class.getSimpleName()),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_id.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.patient_id.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.visit_id.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_req_id.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.his_exam_id.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_dept_name.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_dept_code.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.scheduled_date_time.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_time.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.exam_status.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.is_read.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.is_normal.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master._uid_value.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.idPatient.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.idVisit.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.idExamRequest.toString(),
-					CdrExamMasterRowMapper.openEHR_EHR_INSTRUCTION_exam_master.serial_no.toString());	
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.class.getSimpleName()),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_id.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.patient_id.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.visit_id.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_req_id.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.his_exam_id.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_dept_name.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_dept_code.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.scheduled_date_time.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_time.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.exam_status.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.is_read.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.is_normal.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master._uid_value.toString(),
+					CdrExamMasterRowMapper.openEHR_EHR_OBSERVATION_exam_master.serial_no.toString());	
 		}
 		return jt.update(sql, source);	
 	}
@@ -168,9 +159,6 @@ public class CdrExamMasterDaoImpl implements CdrExamMasterDao {
 		parameters.put("is_normal", e.getIsNormal());
 		parameters.put("serial_no", e.getSerialNo());
 		parameters.put("_uid_value", e.get_uid_value());
-		parameters.put("idPatient", e.getIdPatient());
-		parameters.put("idVisit", e.getIdVisit());
-		parameters.put("idExamRequest", e.getIdExamRequest());
 		return parameters;
 	}
 	

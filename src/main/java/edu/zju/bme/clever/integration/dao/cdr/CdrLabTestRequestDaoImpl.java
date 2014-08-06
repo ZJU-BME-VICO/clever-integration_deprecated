@@ -30,8 +30,8 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 	public List<LabTestRequest> get(String testReqId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :testReqId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()),
-				CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.class.getSimpleName()),
+				CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_req_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("testReqId", testReqId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -48,8 +48,8 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 	public int getCount(String testReqId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :testReqId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()),
-				CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.class.getSimpleName()),
+				CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_req_id);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("testReqId", testReqId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -86,12 +86,9 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 					+ ":notes_for_spcm, "
 					+ ":priority_indicator, "
 					+ ":lab_test_status, "
-					+ ":_uid_value, "
-					+ ":idPatient, "
-					+ ":idVisit, "
-					+ ":idOrder)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()));
+					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.class.getSimpleName()));
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -117,40 +114,34 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 					+ "{21} = :notes_for_spcm, "
 					+ "{22} = :priority_indicator, "
 					+ "{23} = :lab_test_status, "
-					+ "{24} = :_uid_value, "
-					+ "{25} = :idPatient, "
-					+ "{26} = :idVisit, "
-					+ "{27} = :idOrder WHERE {28} = :test_req_id";	
+					+ "{24} = :_uid_value WHERE {25} = :test_req_id";	
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.class.getSimpleName()),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.patient_id.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.visit_id.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.order_id.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_date_time.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_dept_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_dept_id.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_doctor_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.req_doctor_id.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.lab_test_subject_code.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.lab_test_subject_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_cause.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.relevant_clinic_diag.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.sample_class_code.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.sample_class_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_tube_code.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_tube_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.lab_test_type_code.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.lab_test_type_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.execute_dept_code.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.execute_dept_name.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.notes_for_spcm.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.priority_indicator.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.lab_test_status.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request._uid_value.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idPatient.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idVisit.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.idOrder.toString(),
-					CdrLabTestRequestRowMapper.openEHR_EHR_INSTRUCTION_lab_test_request.test_req_id.toString());		
+					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.class.getSimpleName()),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.patient_id.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.visit_id.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.order_id.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.req_date_time.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.req_dept_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.req_dept_id.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.req_doctor_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.req_doctor_id.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.lab_test_subject_code.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.lab_test_subject_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_cause.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.relevant_clinic_diag.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.sample_class_code.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.sample_class_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_tube_code.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_tube_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.lab_test_type_code.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.lab_test_type_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.execute_dept_code.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.execute_dept_name.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.notes_for_spcm.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.priority_indicator.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.lab_test_status.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request._uid_value.toString(),
+					CdrLabTestRequestRowMapper.openEHR_EHR_OBSERVATION_lab_test_request.test_req_id.toString());		
 		}
 		return jt.update(sql, source);	
 	}
@@ -182,9 +173,6 @@ public class CdrLabTestRequestDaoImpl implements CdrLabTestRequestDao {
 		parameters.put("priority_indicator", l.getPriorityIdicator());
 		parameters.put("lab_test_status", l.getLabTestStatus());
 		parameters.put("_uid_value", l.get_uid_value());
-		parameters.put("idPatient", l.getIdPatient());
-		parameters.put("idVisit", l.getIdVisit());
-		parameters.put("idOrder", l.getIdOrder());
 		return parameters;
 	}
 	

@@ -26,9 +26,6 @@ public class CdrLabTestDataRowMapper implements RowMapper<LabTestData> {
 		result_date_time,
 		test_data_id,
 		_uid_value,
-		idPatient,
-		idVisit,
-		idLabTestMaster,
 	}
 
 	@Override
@@ -50,9 +47,6 @@ public class CdrLabTestDataRowMapper implements RowMapper<LabTestData> {
 		l.setResultDateTime(RowMapperUtil.getDateTime(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.result_date_time.toString())));
 		l.setTestDataId(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.test_data_id.toString()));
 		l.set_uid_value(rs.getString(rs.getString(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data._uid_value.toString())));
-		l.setIdPatient(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idPatient.toString()));
-		l.setIdVisit(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idVisit.toString()));
-		l.setIdLabTestMaster(RowMapperUtil.getInteger(rs, CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idLabTestMaster.toString()));
 		return l;
 	}
 

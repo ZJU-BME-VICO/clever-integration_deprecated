@@ -26,7 +26,6 @@ public class ExamReport extends Entity {
 	private Integer isAbnormal;
 	private Integer _hibernarmId;
 	private String _uid_value;
-	private Integer idExamMaster;
 	
 	public ExamReport() {
 		super();
@@ -198,14 +197,6 @@ public class ExamReport extends Entity {
 
 	public void set_uid_value(String _uid_value) {
 		this._uid_value = _uid_value;
-	}
-
-	public Integer getIdExamMaster() {
-		return idExamMaster;
-	}
-
-	public void setIdExamMaster(Integer idExamMaster) {
-		this.idExamMaster = idExamMaster;
 	}
 	
 }

@@ -32,15 +32,12 @@ public class CdrExamReportRowMapper implements RowMapper<ExamReport> {
 		second_path,
 		is_abnormal,
 		_uid_value,
-		idExamMaster,
 	}
 
 	@Override
 	public ExamReport mapRow(ResultSet rs, int rowNum)
 			throws SQLException {
 		ExamReport e = new ExamReport();
-		
-		
 		e.set_hibernarmId(RowMapperUtil.getInteger(rs, CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report._hibernarmId.toString()));
 		e.setExamId(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_id.toString()));
 		e.setReportNo(RowMapperUtil.getInteger(rs, CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_no.toString()));
@@ -62,7 +59,6 @@ public class CdrExamReportRowMapper implements RowMapper<ExamReport> {
 		e.setSecondPath(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.second_path.toString()));
 		e.setIsAbnormal(RowMapperUtil.getInteger(rs, CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.is_abnormal.toString()));
 		e.set_uid_value(rs.getString(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report._uid_value.toString()));
-		e.setIdExamMaster(RowMapperUtil.getInteger(rs, CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.idExamMaster.toString()));
 		return e;
 	}
 

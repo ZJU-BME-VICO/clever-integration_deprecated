@@ -30,8 +30,8 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 	public List<Patient> get(String patientId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :patientId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
-				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.class.getSimpleName()),
+				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("patientId", patientId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -48,8 +48,8 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 	public List<Patient> get(int serialNo) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
-				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.class.getSimpleName()),
+				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.serial_no);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -66,8 +66,8 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 	public int getCount(String patientId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :patientId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
-				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.class.getSimpleName()),
+				CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_id);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("patientId", patientId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -109,23 +109,16 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 					+ ":death_time, "
 					+ ":created_date, "
 					+ ":created_by, "
-					+ ":last_modify_date, "
-					+ ":last_modified_by, "
-					+ ":voided_indicator, "
-					+ ":voided_date, "
-					+ ":voided_by, "
-					+ ":ref_patient_id, "
-					+ ":inpatientno, "
-					+ ":outpatientno, "
-					+ ":emergencyno, "
 					+ ":patient_healthcare_type_code, "
 					+ ":patient_healthcare_type_name, "
 					+ ":patient_healthcare_property_code, "
 					+ ":patient_healthcare_property_name, "
+					+ ":mpi_serial_no, "
+					+ ":edit_time, "
 					+ ":serial_no, "
 					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()));	
+					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.class.getSimpleName()));	
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :_uid_value, "
@@ -157,66 +150,52 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 					+ "{27} = :death_time, "
 					+ "{28} = :created_date, "
 					+ "{29} = :created_by, "
-					+ "{30} = :last_modify_date, "
-					+ "{31} = :last_modified_by, "
-					+ "{32} = :voided_indicator, "
-					+ "{33} = :voided_date, "
-					+ "{34} = :voided_by, "
-					+ "{35} = :ref_patient_id, "
-					+ "{36} = :inpatientno, "
-					+ "{37} = :outpatientno, "
-					+ "{38} = :emergencyno, "
-					+ "{39} = :patient_healthcare_type_code, "
-					+ "{40} = :patient_healthcare_type_name, "
-					+ "{41} = :patient_healthcare_property_code, "
-					+ "{42} = :patient_healthcare_property_name, "
-					+ "{43} = :serial_no WHERE {44} = :patient_id";		
+					+ "{30} = :patient_healthcare_type_code, "
+					+ "{31} = :patient_healthcare_type_name, "
+					+ "{32} = :patient_healthcare_property_code, "
+					+ "{33} = :patient_healthcare_property_name, "
+					+ "{34} = :mpi_serial_no, "
+					+ "{35} = :edit_time, "
+					+ "{36} = :serial_no WHERE {37} = :patient_id";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.class.getSimpleName()),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient._uid_value.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.name_phonetic.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.gender.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.date_of_birth.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.birth_place.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.nationality.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ethnic_group.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.marital_status.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.career.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.degree.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.blood_type_abo.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.blood_type_rh.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.identity_card_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.household_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.passport_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.military_id.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.health_insurance_id.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.health_card_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.email.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.mailing_address.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.zip_code.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_mobile.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_home.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.phone_no_business.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_indicator.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.death_time.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_date.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.created_by.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modify_date.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.last_modified_by.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_indicator.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_date.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.voided_by.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.ref_patient_id.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.inpatientno.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.outpatientno.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.emergencyno.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_type_code.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_type_name.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_code.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_healthcare_property_name.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.serial_no.toString(),
-					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_patient.patient_id.toString());	
+					DatabaseUtil.getCdrDatabaseTableName(CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.class.getSimpleName()),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log._uid_value.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.name.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.name_phonetic.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.gender.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.date_of_birth.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.birth_place.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.nationality.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.ethnic_group.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.marital_status.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.career.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.degree.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.blood_type_abo.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.blood_type_rh.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.identity_card_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.household_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.passport_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.military_id.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.health_insurance_id.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.health_card_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.email.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.mailing_address.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.zip_code.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.phone_no_mobile.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.phone_no_home.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.phone_no_business.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.death_indicator.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.death_time.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.created_date.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.created_by.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_healthcare_type_code.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_healthcare_type_name.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_healthcare_property_code.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_healthcare_property_name.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.mpi_serial_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.edit_time.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.serial_no.toString(),
+					CdrPatientRowMapper.openEHR_DEMOGRAPHIC_PERSON_master_patient_index_modifyed_log.patient_id.toString());	
 		}
 		return jt.update(sql, source);		
 	}
@@ -252,19 +231,12 @@ public class CdrPatientDaoImpl implements CdrPatientDao {
 		parameters.put("death_time", RowMapperUtil.getDateTimeString(p.getDeathTime()));
 		parameters.put("created_date", RowMapperUtil.getDateTimeString(p.getCreatedDate()));
 		parameters.put("created_by", p.getCreatedBy());
-		parameters.put("last_modify_date", RowMapperUtil.getDateTimeString(p.getLastModifyDate()));
-		parameters.put("last_modified_by", p.getLastModifiedBy());
-		parameters.put("voided_indicator", p.getVoidedIndicator());
-		parameters.put("voided_date", RowMapperUtil.getDateTimeString(p.getVoidedDate()));
-		parameters.put("voided_by", p.getVoidedBy());
-		parameters.put("ref_patient_id", p.getRefPatientId());
-		parameters.put("inpatientno", p.getInpatientNo());
-		parameters.put("outpatientno", p.getOutpatientNo());
-		parameters.put("emergencyno", p.getEmergencyNo());
 		parameters.put("patient_healthcare_type_code", p.getPatientHealthcareTypeCode());
 		parameters.put("patient_healthcare_type_name", p.getPatientHealthcareTypeName());
 		parameters.put("patient_healthcare_property_code", p.getPatientHealthcarePropertyCode());
 		parameters.put("patient_healthcare_property_name", p.getPatientHealthcarePropertyName());
+		parameters.put("mpi_serial_no", p.getMpiSerialNo());
+		parameters.put("edit_time", RowMapperUtil.getDateTimeString(p.getEditTime()));		
 		parameters.put("serial_no", p.getSerialNo());
 		parameters.put("_uid_value", p.get_uid_value());
 		return parameters;

@@ -75,10 +75,7 @@ public class CdrLabTestDataDaoImpl implements CdrLabTestDataDao {
 					+ ":instrument_id, "
 					+ ":result_date_time, "
 					+ ":test_data_id, "
-					+ ":_uid_value, "
-					+ ":idPatient, "
-					+ ":idVisit, "
-					+ ":idLabTestMaster)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.class.getSimpleName()));
 		} else {
@@ -95,10 +92,7 @@ public class CdrLabTestDataDaoImpl implements CdrLabTestDataDao {
 					+ "{10} = :normal_reference_values, "
 					+ "{11} = :instrument_id, "
 					+ "{12} = :result_date_time, "
-					+ "{13} = :_uid_value, "
-					+ "{14} = :idPatient, "
-					+ "{15} = :idVisit, "
-					+ "{16} = :idLabTestMaster WHERE {17} = :test_data_id";	
+					+ "{13} = :_uid_value WHERE {14} = :test_data_id";	
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.class.getSimpleName()),
 					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.patient_id.toString(),
@@ -114,10 +108,7 @@ public class CdrLabTestDataDaoImpl implements CdrLabTestDataDao {
 					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.instrument_id.toString(),
 					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.result_date_time.toString(),
 					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.test_data_id.toString(),
-					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data._uid_value.toString(),
-					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idPatient.toString(),
-					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idVisit.toString(),
-					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data.idLabTestMaster.toString());
+					CdrLabTestDataRowMapper.openEHR_EHR_OBSERVATION_lab_test_data._uid_value.toString());
 		}
 		return jt.update(sql, source);		
 	}
@@ -138,9 +129,6 @@ public class CdrLabTestDataDaoImpl implements CdrLabTestDataDao {
 		parameters.put("result_date_time", RowMapperUtil.getDateTimeString(l.getResultDateTime()));
 		parameters.put("test_data_id", l.getTestDataId());
 		parameters.put("_uid_value", l.get_uid_value());
-		parameters.put("idPatient", l.getIdPatient());
-		parameters.put("idVisit", l.getIdVisit());
-		parameters.put("idLabTestMaster", l.getIdLabTestMaster());
 		return parameters;
 	}
 	

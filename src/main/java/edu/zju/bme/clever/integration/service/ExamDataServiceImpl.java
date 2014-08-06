@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrExamDataDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasExamDataDao;
 import edu.zju.bme.clever.integration.entity.ExamData;
-import edu.zju.bme.clever.integration.entity.ExamMaster;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("examDataService")
@@ -31,10 +30,7 @@ public class ExamDataServiceImpl implements ExamDataService {
 		if (examDatas.size() == 1) {
 			ExamData e = examDatas.get(0);
 			
-			ExamMaster examMaster = this.examMasterService.cachedOrIntegrate(e.getExamId());
-			if (examMaster != null) {
-				e.setIdExamMaster(examMaster.get_hibernarmId());
-			}
+			this.examMasterService.cachedOrIntegrate(e.getExamId());
 
 			if (this.cdrExamDataDao.save(e) == 1) {
 				success = true;

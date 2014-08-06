@@ -28,8 +28,8 @@ public class MiasPatientDaoImpl implements MiasPatientDao {
 	public List<Patient> get(String patientId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :patientId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getMiasDatabaseTableName(MiasPatientRowMapper.MASTER_PATIENT_INDEX.class.getSimpleName()),
-				MiasPatientRowMapper.MASTER_PATIENT_INDEX.PATIENT_ID);	
+				DatabaseUtil.getMiasDatabaseTableName(MiasPatientRowMapper.MASTER_PATIENT_INDEX_MODIFYED_LOG.class.getSimpleName()),
+				MiasPatientRowMapper.MASTER_PATIENT_INDEX_MODIFYED_LOG.PATIENT_ID);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("patientId", patientId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -40,8 +40,8 @@ public class MiasPatientDaoImpl implements MiasPatientDao {
 	public List<Patient> get(int serialNo) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :serialNo";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getMiasDatabaseTableName(MiasPatientRowMapper.MASTER_PATIENT_INDEX.class.getSimpleName()),
-				MiasPatientRowMapper.MASTER_PATIENT_INDEX.SERIAL_NO);	
+				DatabaseUtil.getMiasDatabaseTableName(MiasPatientRowMapper.MASTER_PATIENT_INDEX_MODIFYED_LOG.class.getSimpleName()),
+				MiasPatientRowMapper.MASTER_PATIENT_INDEX_MODIFYED_LOG.SERIAL_NO);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("serialNo", serialNo);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);

@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrExamMasterDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasExamMasterDao;
 import edu.zju.bme.clever.integration.entity.ExamMaster;
-import edu.zju.bme.clever.integration.entity.ExamRequest;
-import edu.zju.bme.clever.integration.entity.Patient;
-import edu.zju.bme.clever.integration.entity.Visit;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("examMasterService")
@@ -67,20 +64,11 @@ public class ExamMasterServiceImpl implements ExamMasterService {
 		if (examMasters.size() == 1) {
 			ExamMaster e = examMasters.get(0);
 			
-			Patient p = this.patientService.cachedOrIntegrate(e.getPatientId());
-			if (p != null) {
-				e.setIdPatient(p.get_hibernarmId());
-			}
+			this.patientService.cachedOrIntegrate(e.getPatientId());
 			
-			Visit v = this.visitService.cachedOrIntegrate(e.getVisitId());
-			if (v != null) {
-				e.setIdVisit(v.get_hibernarmId());
-			}
+			this.visitService.cachedOrIntegrate(e.getVisitId());
 			
-			ExamRequest examRequest = this.examRequestService.cachedOrIntegrate(e.getExamReqId());
-			if (examRequest != null) {
-				e.setIdExamRequest(examRequest.get_hibernarmId());
-			}
+			this.examRequestService.cachedOrIntegrate(e.getExamReqId());
 
 			if (this.cdrExamMasterDao.save(e) == 1) {
 				success = true;

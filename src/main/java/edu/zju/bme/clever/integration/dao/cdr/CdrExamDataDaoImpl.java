@@ -71,8 +71,7 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					+ ":first_path, "
 					+ ":second_media_name, "
 					+ ":second_path, "
-					+ ":_uid_value, "
-					+ ":idExamMaster)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.class.getSimpleName()));
 		} else {
@@ -86,8 +85,7 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					+ "{7} = :first_path, "
 					+ "{8} = :second_media_name, "
 					+ "{9} = :second_path, "
-					+ "{10} = :_uid_value, "
-					+ "{11} = :idExamMaster WHERE {12} = :data_no";	
+					+ "{10} = :_uid_value WHERE {11} = :data_no";	
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.class.getSimpleName()),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.exam_id.toString(),
@@ -100,7 +98,6 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_media_name.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_path.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data._uid_value.toString(),
-					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.idExamMaster.toString(),
 					CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.data_no.toString());
 		}
 		return jt.update(sql, source);		
@@ -119,7 +116,6 @@ public class CdrExamDataDaoImpl implements CdrExamDataDao {
 		parameters.put("second_media_name", e.getSecondMediaName());
 		parameters.put("second_path", e.getSecondPath());
 		parameters.put("_uid_value", e.get_uid_value());
-		parameters.put("idExamMaster", e.getIdExamMaster());
 		return parameters;
 	}
 	

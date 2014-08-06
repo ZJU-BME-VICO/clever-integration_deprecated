@@ -10,8 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrExamItemDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasExamItemDao;
 import edu.zju.bme.clever.integration.entity.ExamItem;
-import edu.zju.bme.clever.integration.entity.ExamMaster;
-import edu.zju.bme.clever.integration.entity.ExamRequest;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
 @Service("examItemService")
@@ -34,15 +32,9 @@ public class ExamItemServiceImpl implements ExamItemService {
 		if (examItems.size() == 1) {
 			ExamItem e = examItems.get(0);
 			
-			ExamRequest examRequest = this.examRequestService.cachedOrIntegrate(e.getExamReqId());
-			if (examRequest != null) {
-				e.setIdExamRequest(examRequest.get_hibernarmId());
-			}
+			this.examRequestService.cachedOrIntegrate(e.getExamReqId());
 			
-			ExamMaster examMaster = this.examMasterService.cachedOrIntegrate(e.getExamId());
-			if (examMaster != null) {
-				e.setIdExamMaster(examMaster.get_hibernarmId());
-			}
+			this.examMasterService.cachedOrIntegrate(e.getExamId());
 
 			if (this.cdrExamItemDao.save(e) == 1) {
 				success = true;

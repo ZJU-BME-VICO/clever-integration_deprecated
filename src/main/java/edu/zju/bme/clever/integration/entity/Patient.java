@@ -34,19 +34,12 @@ public class Patient extends Entity {
 	private LocalDateTime deathTime;
 	private LocalDateTime createdDate;
 	private String createdBy;
-	private LocalDateTime lastModifyDate;
-	private String lastModifiedBy;
-	private String voidedIndicator;
-	private LocalDateTime voidedDate;
-	private String voidedBy;
-	private String refPatientId;
-	private String inpatientNo;
-	private String outpatientNo;
-	private String emergencyNo;
 	private String patientHealthcareTypeCode;
 	private String patientHealthcareTypeName;
 	private String patientHealthcarePropertyCode;
 	private String patientHealthcarePropertyName;
+	private Integer mpiSerialNo;
+	private LocalDateTime editTime;
 	private Integer _hibernarmId;
 	private String _uid_value;
 	
@@ -294,70 +287,6 @@ public class Patient extends Entity {
 		this.createdBy = createdBy;
 	}
 
-	public LocalDateTime getLastModifyDate() {
-		return lastModifyDate;
-	}
-
-	public void setLastModifyDate(LocalDateTime lastModifyDate) {
-		this.lastModifyDate = lastModifyDate;
-	}
-
-	public String getLastModifiedBy() {
-		return lastModifiedBy;
-	}
-
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-
-	public String getVoidedIndicator() {
-		return voidedIndicator;
-	}
-
-	public void setVoidedIndicator(String voidedIndicator) {
-		this.voidedIndicator = voidedIndicator;
-	}
-
-	public LocalDateTime getVoidedDate() {
-		return voidedDate;
-	}
-
-	public void setVoidedDate(LocalDateTime voidedDate) {
-		this.voidedDate = voidedDate;
-	}
-
-	public String getRefPatientId() {
-		return refPatientId;
-	}
-
-	public void setRefPatientId(String refPatientId) {
-		this.refPatientId = refPatientId;
-	}
-
-	public String getInpatientNo() {
-		return inpatientNo;
-	}
-
-	public void setInpatientNo(String inpatientNo) {
-		this.inpatientNo = inpatientNo;
-	}
-
-	public String getOutpatientNo() {
-		return outpatientNo;
-	}
-
-	public void setOutpatientNo(String outpatientNo) {
-		this.outpatientNo = outpatientNo;
-	}
-
-	public String getEmergencyNo() {
-		return emergencyNo;
-	}
-
-	public void setEmergencyNo(String emergencyNo) {
-		this.emergencyNo = emergencyNo;
-	}
-
 	public String getPatientHealthcareTypeCode() {
 		return patientHealthcareTypeCode;
 	}
@@ -392,12 +321,20 @@ public class Patient extends Entity {
 		this.patientHealthcarePropertyName = patientHealthcarePropertyName;
 	}
 
-	public String getVoidedBy() {
-		return voidedBy;
+	public Integer getMpiSerialNo() {
+		return mpiSerialNo;
 	}
 
-	public void setVoidedBy(String voidedBy) {
-		this.voidedBy = voidedBy;
+	public void setMpiSerialNo(Integer mpiSerialNo) {
+		this.mpiSerialNo = mpiSerialNo;
+	}
+
+	public LocalDateTime getEditTime() {
+		return editTime;
+	}
+
+	public void setEditTime(LocalDateTime editTime) {
+		this.editTime = editTime;
 	}
 
 	public Integer get_hibernarmId() {

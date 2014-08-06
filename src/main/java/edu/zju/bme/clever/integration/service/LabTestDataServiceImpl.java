@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.zju.bme.clever.integration.dao.cdr.CdrLabTestDataDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasLabTestDataDao;
 import edu.zju.bme.clever.integration.entity.LabTestData;
-import edu.zju.bme.clever.integration.entity.LabTestMaster;
-import edu.zju.bme.clever.integration.entity.Patient;
-import edu.zju.bme.clever.integration.entity.Visit;
 
 @Service("labTestDataService")
 @Transactional
@@ -36,20 +33,11 @@ public class LabTestDataServiceImpl implements LabTestDataService {
 		if (labTestDatas.size() == 1) {
 			LabTestData l = labTestDatas.get(0);
 			
-			Patient p = this.patientService.cachedOrIntegrate(l.getPatientId());
-			if (p != null) {
-				l.setIdPatient(p.get_hibernarmId());
-			}
+			this.patientService.cachedOrIntegrate(l.getPatientId());
 			
-			Visit v = this.visitService.cachedOrIntegrate(l.getVisitId());
-			if (v != null) {
-				l.setIdVisit(v.get_hibernarmId());
-			}
+			this.visitService.cachedOrIntegrate(l.getVisitId());
 			
-			LabTestMaster labTestMaster = this.labTestMasterService.cachedOrIntegrate(l.getTestId());
-			if (labTestMaster != null) {
-				l.setIdLabTestMaster(labTestMaster.get_hibernarmId());
-			}
+			this.labTestMasterService.cachedOrIntegrate(l.getTestId());
 
 			if (this.cdrLabTestDataDao.save(l) == 1) {
 				success = true;

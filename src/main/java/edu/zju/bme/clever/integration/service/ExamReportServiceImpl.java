@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.zju.bme.clever.integration.dao.cdr.CdrExamReportDao;
 import edu.zju.bme.clever.integration.dao.mias.MiasExamReportDao;
-import edu.zju.bme.clever.integration.entity.ExamMaster;
 import edu.zju.bme.clever.integration.entity.ExamReport;
 import edu.zju.bme.clever.integration.util.CdrCache;
 
@@ -31,10 +30,7 @@ public class ExamReportServiceImpl implements ExamReportService {
 		if (examDatas.size() == 1) {
 			ExamReport e = examDatas.get(0);
 			
-			ExamMaster examMaster = this.examMasterService.cachedOrIntegrate(e.getExamId());
-			if (examMaster != null) {
-				e.setIdExamMaster(examMaster.get_hibernarmId());
-			}
+			this.examMasterService.cachedOrIntegrate(e.getExamId());
 
 			if (this.cdrExamReportDao.save(e) == 1) {
 				success = true;

@@ -23,7 +23,6 @@ public class CdrExamDataRowMapper implements RowMapper<ExamData> {
 		second_media_name,
 		second_path,
 		_uid_value,
-		idExamMaster,
 	}
 
 	@Override
@@ -42,7 +41,6 @@ public class CdrExamDataRowMapper implements RowMapper<ExamData> {
 		e.setSecondMediaName(rs.getString(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_media_name.toString()));
 		e.setSecondPath(rs.getString(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.second_path.toString()));
 		e.set_uid_value(rs.getString(CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data._uid_value.toString()));
-		e.setIdExamMaster(RowMapperUtil.getInteger(rs, CdrExamDataRowMapper.openEHR_EHR_OBSERVATION_exam_data.idExamMaster.toString()));
 		return e;
 	}
 

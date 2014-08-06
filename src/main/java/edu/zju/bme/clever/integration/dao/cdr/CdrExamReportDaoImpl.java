@@ -81,8 +81,7 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					+ ":second_media_name, "
 					+ ":second_path, "
 					+ ":is_abnormal, "
-					+ ":_uid_value, "
-					+ ":idExamMaster)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.class.getSimpleName()));
 		} else {
@@ -105,8 +104,7 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					+ "{16} = :second_media_name, "
 					+ "{17} = :second_path, "
 					+ "{18} = :is_abnormal, "
-					+ "{19} = :_uid_value, "
-					+ "{20} = :idExamMaster WHERE {21} = :report_no";	
+					+ "{19} = :_uid_value WHERE {20} = :report_no";	
 			sql = MessageFormat.format(sqlFormat, 				
 					DatabaseUtil.getCdrDatabaseTableName(CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.class.getSimpleName()),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.exam_id.toString(),
@@ -128,7 +126,6 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.second_path.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.is_abnormal.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report._uid_value.toString(),
-					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.idExamMaster.toString(),
 					CdrExamReportRowMapper.openEHR_EHR_OBSERVATION_exam_report.report_no.toString());	
 		}
 		return jt.update(sql, source);	
@@ -156,7 +153,6 @@ public class CdrExamReportDaoImpl implements CdrExamReportDao {
 		parameters.put("second_path", e.getSecondPath());
 		parameters.put("is_abnormal", e.getIsAbnormal());
 		parameters.put("_uid_value", e.get_uid_value());
-		parameters.put("idExamMaster", e.getIdExamMaster());
 		return parameters;
 	}
 	

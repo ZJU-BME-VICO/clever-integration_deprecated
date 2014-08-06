@@ -30,8 +30,8 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 	public List<ExamRequest> get(String examReqId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :examReqId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()),
-				CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.exam_req_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.class.getSimpleName()),
+				CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.exam_req_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("examReqId", examReqId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -48,8 +48,8 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 	public int getCount(String examReqId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :examReqId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()),
-				CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.exam_req_id);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.class.getSimpleName()),
+				CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.exam_req_id);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("examReqId", examReqId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -81,12 +81,9 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 					+ ":memo, "
 					+ ":transportation_mode, "
 					+ ":exam_request_status, "
-					+ ":_uid_value, "
-					+ ":idPatient, "
-					+ ":idVisit, "
-					+ ":idOrder)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()));
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.class.getSimpleName()));
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -107,35 +104,29 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 					+ "{16} = :memo, "
 					+ "{17} = :transportation_mode, "
 					+ "{18} = :exam_request_status, "
-					+ "{19} = :_uid_value, "
-					+ "{20} = :idPatient, "
-					+ "{21} = :idVisit, "
-					+ "{22} = :idOrder WHERE {23} = :exam_req_id";	
+					+ "{19} = :_uid_value WHERE {20} = :exam_req_id";	
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.class.getSimpleName()),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.patient_id.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.visit_id.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.order_id.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.priority.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_date_time.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_dept_name.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_dept_id.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_doctor_name.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.req_doctor_id.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.purpose.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.syndrom.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.signs.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.relevant_lab_test.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.relevant_diag.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.diagnosis.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.memo.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.transportation_mode.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.exam_request_status.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request._uid_value.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.idPatient.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.idVisit.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.idOrder.toString(),
-					CdrExamRequestRowMapper.openEHR_EHR_INSTRUCTION_exam_request.exam_req_id.toString());
+					DatabaseUtil.getCdrDatabaseTableName(CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.class.getSimpleName()),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.patient_id.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.visit_id.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.order_id.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.priority.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.req_date_time.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.req_dept_name.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.req_dept_id.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.req_doctor_name.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.req_doctor_id.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.purpose.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.syndrom.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.signs.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.relevant_lab_test.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.relevant_diag.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.diagnosis.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.memo.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.transportation_mode.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.exam_request_status.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request._uid_value.toString(),
+					CdrExamRequestRowMapper.openEHR_EHR_OBSERVATION_exam_request.exam_req_id.toString());
 		}
 		return jt.update(sql, source);		
 	}
@@ -162,9 +153,6 @@ public class CdrExamRequestDaoImpl implements CdrExamRequestDao {
 		parameters.put("transportation_mode", e.getTransportationMode());
 		parameters.put("exam_request_status", e.getExamRequestStatus());
 		parameters.put("_uid_value", e.get_uid_value());
-		parameters.put("idPatient", e.getIdPatient());
-		parameters.put("idVisit", e.getIdVisit());
-		parameters.put("idOrder", e.getIdOrder());
 		return parameters;
 	}
 	

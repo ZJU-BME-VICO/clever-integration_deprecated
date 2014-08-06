@@ -30,8 +30,8 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 	public List<LabTestMaster> get(String testId) {
 		String sqlFormat = "SELECT TOP 1 * FROM {0} WHERE {1} = :testId";
 		String sql = MessageFormat.format(sqlFormat, 
-				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()),
-				CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_id);		
+				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.class.getSimpleName()),
+				CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_id);		
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("testId", testId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -48,8 +48,8 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 	public int getCount(String testId) {
 		String sqlFormat = "SELECT COUNT(*) FROM {0} WHERE {1} = :testId";
 		String sql = MessageFormat.format(sqlFormat, 				
-				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()),
-				CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_id);	
+				DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.class.getSimpleName()),
+				CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_id);	
 		Map<String, Object> paramters = new HashMap<String, Object>();
 		paramters.put("testId", testId);
 		SqlParameterSource source = new MapSqlParameterSource(paramters);
@@ -84,13 +84,9 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					+ ":is_read, "
 					+ ":is_normal, "
 					+ ":serial_no, "
-					+ ":_uid_value, "
-					+ ":idPatient, "
-					+ ":idVisit, "
-					+ ":idLabTestRequest, "
-					+ ":idOrder)";		
+					+ ":_uid_value)";		
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()));
+					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.class.getSimpleName()));
 		} else {
 			String sqlFormat = "UPDATE {0} SET "
 					+ "{1} = :patient_id, "
@@ -114,40 +110,32 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 					+ "{19} = :is_read, "
 					+ "{20} = :is_normal, "
 					+ "{21} = :serial_no, "
-					+ "{22} = :_uid_value, "
-					+ "{23} = :idPatient, "
-					+ "{24} = :idVisit, "
-					+ "{25} = :idLabTestRequest, "
-					+ "{26} = :idOrder WHERE {27} = :test_id";	
+					+ "{22} = :_uid_value WHERE {23} = :test_id";	
 			sql = MessageFormat.format(sqlFormat, 				
-					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.class.getSimpleName()),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.patient_id.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.visit_id.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_req_id.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.his_test_id.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.order_id.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_no.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.lab_test_subject_code.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.lab_test_subject_name.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.sample_class_code.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.sample_class_name.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_tube_code.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_tube_name.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.lab_test_type_code.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.lab_test_type_name.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.execute_dept_code.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.execute_dept_name.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_status.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_time.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.is_read.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.is_normal.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.serial_no.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master._uid_value.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idPatient.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idVisit.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idLabTestRequest.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.idOrder.toString(),
-					CdrLabTestMasterRowMapper.openEHR_EHR_INSTRUCTION_lab_test_master.test_id.toString());
+					DatabaseUtil.getCdrDatabaseTableName(CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.class.getSimpleName()),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.patient_id.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.visit_id.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_req_id.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.his_test_id.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.order_id.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_no.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.lab_test_subject_code.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.lab_test_subject_name.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.sample_class_code.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.sample_class_name.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_tube_code.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_tube_name.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.lab_test_type_code.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.lab_test_type_name.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.execute_dept_code.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.execute_dept_name.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_status.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_time.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.is_read.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.is_normal.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.serial_no.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master._uid_value.toString(),
+					CdrLabTestMasterRowMapper.openEHR_EHR_OBSERVATION_lab_test_master.test_id.toString());
 		}
 		return jt.update(sql, source);	
 	}
@@ -177,10 +165,6 @@ public class CdrLabTestMasterDaoImpl implements CdrLabTestMasterDao {
 		parameters.put("is_normal", l.getIsNormal());
 		parameters.put("serial_no", l.getSerialNo());
 		parameters.put("_uid_value", l.get_uid_value());
-		parameters.put("idPatient", l.getIdPatient());
-		parameters.put("idVisit", l.getIdVisit());
-		parameters.put("idLabTestRequest", l.getIdLabTestRequest());
-		parameters.put("idOrder", l.getIdOrder());
 		return parameters;
 	}
 	

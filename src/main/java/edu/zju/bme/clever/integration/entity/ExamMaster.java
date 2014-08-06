@@ -19,9 +19,6 @@ public class ExamMaster extends Entity {
 	private Integer serialNo;
 	private Integer _hibernarmId;
 	private String _uid_value;
-	private Integer idPatient;
-	private Integer idVisit;
-	private Integer idExamRequest;
 	
 	public ExamMaster() {
 		super();
@@ -145,30 +142,6 @@ public class ExamMaster extends Entity {
 
 	public void set_uid_value(String _uid_value) {
 		this._uid_value = _uid_value;
-	}
-
-	public Integer getIdPatient() {
-		return idPatient;
-	}
-
-	public void setIdPatient(Integer idPatient) {
-		this.idPatient = idPatient;
-	}
-
-	public Integer getIdVisit() {
-		return idVisit;
-	}
-
-	public void setIdVisit(Integer idVisit) {
-		this.idVisit = idVisit;
-	}
-
-	public Integer getIdExamRequest() {
-		return idExamRequest;
-	}
-
-	public void setIdExamRequest(Integer idExamRequest) {
-		this.idExamRequest = idExamRequest;
 	}
 	
 }
